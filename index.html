@@ -110,7 +110,7 @@ footer .note{font-size:10px;color:#888;margin-top:6px;font-style:italic}
 
 <!-- ===== SNIPPET ===== -->
 <section class="card" style="grid-column:1/-1">
-<h2>📋 Como extrair a overview do KingsAge <span class="tip tip-tr" data-tip="Script que lê os dados diretamente da página do KingsAge. Não guarda nem envia nada — tudo local.">?</span></h2>
+<h2>📋 Como extrair a overview do KingsAge <span class="tip tip-tr" data-tip="Script que lê os dados diretamente da página do KingsAge.">?</span></h2>
 <div class="snippet-steps">
   <b>Passo 1:</b> Abre o KingsAge na página <b>Visão geral das aldeias</b><br>
   <b>Passo 2:</b> Pressiona <b>F12</b> → separador <b>Console</b><br>
@@ -138,9 +138,9 @@ footer .note{font-size:10px;color:#888;margin-top:6px;font-style:italic}
 <div id="overviewStatus" class="status"></div>
 </section>
 
-<!-- ===== JOGADORES PROCESSADOS ===== -->
-<section class="card" style="grid-column:1/-1" id="playersSection" style="display:none">
-<h2>👥 Jogadores Processados <span class="tip tip-tr" data-tip="Lista de jogadores com overview processada. Podes adicionar mais jogadores da tua aliança.">?</span></h2>
+<!-- ===== JOGADORES ===== -->
+<section class="card" style="grid-column:1/-1" id="playersSection">
+<h2>👥 Jogadores Processados <span class="tip tip-tr" data-tip="Lista de jogadores com overview processada.">?</span></h2>
 <div id="playersList"></div>
 <div class="row">
   <button class="sec" onclick="addPlayer()">+ Adicionar jogador manualmente</button>
@@ -206,7 +206,7 @@ footer .note{font-size:10px;color:#888;margin-top:6px;font-style:italic}
 
 <!-- ===== RESULTADOS ===== -->
 <section id="results" class="card">
-<h2>📊 Plano Operacional <span class="tip tip-tr" data-tip="Resultado completo: resumo de tropas por jogador, fases, anti-snipes e BB-Code.">?</span></h2>
+<h2>📊 Plano Operacional <span class="tip tip-tr" data-tip="Resultado completo com métricas, anti-snipes, fases e BB-Code.">?</span></h2>
 <button onclick="generateOperation()" style="font-size:13px;padding:8px 20px">⚔ GERAR OPERAÇÃO COMPLETA</button>
 <div id="output" class="empty">Processa as overviews, define fases e alvos. Clica em "Gerar Operação".</div>
 </section>
@@ -216,16 +216,11 @@ footer .note{font-size:10px;color:#888;margin-top:6px;font-style:italic}
 <footer>
   <div class="sig">-AbaddoN-</div>
   <div class="tool-name">⚔ KingsAge Planeador de Operações</div>
-  <div class="note">© 2026 -AbaddoN- · Todos os direitos reservados · v1.2</div>
+  <div class="note">© 2026 -AbaddoN- · Todos os direitos reservados · v1.3</div>
 </footer>
 
 </div>
 <script>
-/* ═══════════════════════════════════════════════════════════════
-   KingsAge Ops Planner — CORE
-   Autor: -AbaddoN-
-   © 2026 - Todos os direitos reservados
-   ═══════════════════════════════════════════════════════════════ */
 const $=id=>document.getElementById(id);
 
 /* ===== SNIPPET ===== */
@@ -302,7 +297,7 @@ const TROOP_LABELS={farmer:'Milícias',templar:'Templários',squire:'Escudeiros'
 const TROOP_ICONS={farmer:'🛡',templar:'⚔',squire:'🗡',warrior:'⚔',archer:'🏹',spy:'👁',crusader:'🐎',blackknight:'🐴',ram:'🔨',catapult:'⚙',snob:'👑'};
 const TROOP_ORDER=['farmer','templar','squire','warrior','archer','spy','crusader','blackknight','ram','catapult','snob'];
 
-let players=[]; // [{name, villages:[{x,y,name,troops,offPower}]}]
+let players=[];
 let phases=[];
 let alliesList=[];
 let _suggestions=[];
@@ -323,7 +318,6 @@ function copySnippet(){
   navigator.clipboard.writeText(SNIPPET).then(()=>{
     alert('✅ Snippet copiado!\n\n1. Abre o KingsAge\n2. F12 → Console\n3. Cola (Ctrl+V) + Enter\n4. Aparece uma janela — Ctrl+A, Ctrl+C\n5. Volta aqui e cola no campo Overview');
   }).catch(()=>{
-    // Fallback: selecionar o texto
     const el = $('snippetText');
     const range = document.createRange();
     range.selectNodeContents(el);
@@ -334,27 +328,55 @@ function copySnippet(){
   });
 }
 function showSnippetInfo(){
-  alert('📋 Como funciona:\n\n1. O snippet lê a tabela da overview do KingsAge\n2. Extrai coordenadas (do title) e tropas (das células)\n3. Mostra uma janela no jogo com o JSON\n4. Copias e colas na dashboard\n\nNão guarda nada, não envia nada para servidores externos.');
+  alert('📋 Como funciona:\n\n1. O snippet lê a tabela da overview do KingsAge\n2. Extrai coordenadas (do title) e tropas (das células)\n3. Mostra uma janela no jogo com o JSON\n4. Copias e colas na dashboard\n\nNão guarda nada, não envia nada.');
 }
 
-/* ===== Parse JSON ===== */
+/* ===== PARSER JSON com SANITIZAÇÃO ===== */
 function parseOverviewJSON(){
-  const text = $('overviewInput').value.trim();
+  let text = $('overviewInput').value.trim();
   if(!text){
     $('overviewStatus').innerHTML = '<span class="bad">Cola o JSON primeiro.</span>';
     return;
   }
   
+  /* ===== SANITIZAÇÃO AUTOMÁTICA ===== */
+  // 1. Remover BOM
+  text = text.replace(/^\uFEFF/, '');
+  
+  // 2. Se começa e termina com aspas exteriores (console.log de string), remover
+  if(text.startsWith('"') && text.endsWith('"')){
+    text = text.substring(1, text.length - 1);
+  }
+  
+  // 3. Desescapar \" → "
+  text = text.replace(/\\"/g, '"');
+  
+  // 4. Desescapar \\ → \
+  text = text.replace(/\\\\/g, '\\');
+  
+  // 5. Desescapar \n → espaço (caso o JSON venha com newlines escapados)
+  text = text.replace(/\\n/g, ' ').replace(/\\t/g, ' ');
+  
+  // 6. Trim final
+  text = text.trim();
+  
   let data;
   try{
     data = JSON.parse(text);
   }catch(e){
-    $('overviewStatus').innerHTML = '<span class="bad">❌ JSON inválido. Verifica se colaste o resultado completo.</span>';
+    console.error('Erro JSON:', e);
+    console.error('Texto recebido (primeiros 300 chars):', text.substring(0,300));
+    $('overviewStatus').innerHTML = '<span class="bad">❌ JSON inválido.<br><small>Erro: ' + e.message + '</small><br><small style="color:#888">Dica: usa o botão "Copiar" do overlay, não copies do console.log.</small></span>';
     return;
   }
   
   if(!Array.isArray(data)){
-    $('overviewStatus').innerHTML = '<span class="bad">❌ Esperava um array JSON.</span>';
+    $('overviewStatus').innerHTML = '<span class="bad">❌ Esperava um array. Recebi: ' + typeof data + '</span>';
+    return;
+  }
+  
+  if(data.length === 0){
+    $('overviewStatus').innerHTML = '<span class="bad">❌ Array vazio. Verifica se colaste o JSON completo.</span>';
     return;
   }
   
@@ -363,14 +385,14 @@ function parseOverviewJSON(){
   const villages = data.map(v => {
     const t = v.troops || {};
     const troops = {
-      farmer: t.farmer||0, templar: t.templar||0, squire: t.squire||0,
-      warrior: t.warrior||0, archer: t.archer||0, spy: t.spy||0,
-      crusader: t.crusader||0, blackknight: t.blackknight||0,
-      ram: t.ram||0, catapult: t.catapult||0, snob: t.snob||0
+      farmer: +t.farmer || 0, templar: +t.templar || 0, squire: +t.squire || 0,
+      warrior: +t.warrior || 0, archer: +t.archer || 0, spy: +t.spy || 0,
+      crusader: +t.crusader || 0, blackknight: +t.blackknight || 0,
+      ram: +t.ram || 0, catapult: +t.catapult || 0, snob: +t.snob || 0
     };
     return {
       key: v.x + '|' + v.y,
-      x: v.x, y: v.y,
+      x: +v.x, y: +v.y,
       name: v.name || (v.x + '|' + v.y),
       owner: owner,
       troops: troops,
@@ -378,7 +400,6 @@ function parseOverviewJSON(){
     };
   }).filter(v => v.x > 0 && v.y > 0);
   
-  // Verificar se o jogador já existe
   const existing = players.findIndex(p => p.name === owner);
   if(existing >= 0){
     players[existing].villages = villages;
@@ -386,7 +407,6 @@ function parseOverviewJSON(){
     players.push({ name: owner, villages: villages });
   }
   
-  // Agregar todos
   aggregateAllies();
   
   $('overviewStatus').innerHTML = `<span class="ok">✓ ${villages.length} aldeias processadas para <b>${owner}</b></span>`;
@@ -423,7 +443,7 @@ function addPlayer(){
 }
 
 function removePlayer(name){
-  if(!confirm('Remover o jogador ' + name + ' e todas as suas aldeias?')) return;
+  if(!confirm('Remover o jogador ' + name + '?')) return;
   players = players.filter(p => p.name !== name);
   aggregateAllies();
   renderPlayers();
@@ -431,7 +451,7 @@ function removePlayer(name){
 }
 
 function clearAllPlayers(){
-  if(!confirm('Remover TODOS os jogadores e aldeias?')) return;
+  if(!confirm('Remover TODOS os jogadores?')) return;
   players = [];
   alliesList = [];
   renderPlayers();
@@ -441,13 +461,12 @@ function clearAllPlayers(){
 function renderPlayers(){
   const el = $('playersList');
   if(!players.length){
-    el.innerHTML = '<p class="small">Sem jogadores processados. Cola uma overview acima.</p>';
+    el.innerHTML = '<p class="small">Sem jogadores processados.</p>';
     return;
   }
   
   let html = '';
   players.forEach(p => {
-    // Calcular totais por tropa
     const totals = {};
     TROOP_ORDER.forEach(k => totals[k] = 0);
     p.villages.forEach(v => {
@@ -476,7 +495,7 @@ function renderPlayers(){
           <th>Coordenada</th>
           <th>Nome</th>
           ${TROOP_ORDER.map(k => `<th style="text-align:center" title="${TROOP_LABELS[k]}">${TROOP_ICONS[k]}</th>`).join('')}
-          <th>Poder Of.</th>
+          <th>Poder</th>
           <th>Tipo</th>
         </tr></thead>
         <tbody>
@@ -602,7 +621,6 @@ function generateOperation(){
   
   let html='';
   
-  // Sumário geral
   html+=`<div class="summary">
     <div class="stat"><div class="v">${players.length}</div><div class="l">Jogadores</div></div>
     <div class="stat"><div class="v">${alliesList.length}</div><div class="l">Aldeias</div></div>
@@ -611,7 +629,7 @@ function generateOperation(){
     <div class="stat warn"><div class="v">${snobVillages.length}</div><div class="l">Aldeias c/ Conde</div></div>
   </div>`;
   
-  // Resumo de tropas POR JOGADOR
+  // Resumo POR JOGADOR
   html+=`<div class="phase"><h4>📦 Resumo de Tropas por Jogador</h4>`;
   players.forEach(p => {
     const totals = {};
@@ -646,7 +664,7 @@ function generateOperation(){
   alliesList.forEach(v => {
     TROOP_ORDER.forEach(k => globalTotals[k] += (v.troops[k] || 0));
   });
-  html+=`<div class="phase"><h4>🌍 Resumo Global de Tropas (todas as aldeias)</h4>
+  html+=`<div class="phase"><h4>🌍 Resumo Global</h4>
     <div class="troop-summary">
       ${TROOP_ORDER.filter(k => globalTotals[k] > 0).map(k => `
         <div class="troop-stat" title="${TROOP_LABELS[k]}: ${fmtNum(globalTotals[k])}">
@@ -663,16 +681,16 @@ function generateOperation(){
     <table class="borderlist">
       <thead><tr><th>Recurso</th><th>Usado</th><th>Disponível</th><th>%</th></tr></thead>
       <tbody>
-        <tr><td>OFFs (aldeias com poder ≥ ${fmtNum(minOff)})</td><td><b>${offCount}</b></td><td>${offVillages.length}</td><td>${offVillages.length?(offCount/offVillages.length*100).toFixed(0):0}%</td></tr>
-        <tr><td>Condes (ataques de conquista)</td><td><b>${snobCount}</b></td><td>${snobVillages.length}</td><td>${snobVillages.length?(snobCount/snobVillages.length*100).toFixed(0):0}%</td></tr>
-        <tr><td>Fakes programados</td><td><b>${fakeMissions.length}</b></td><td>—</td><td>—</td></tr>
-        <tr><td>Anti-snipes programados</td><td><b>${antiSnipeCount}</b></td><td>${antiSnipeTotal}</td><td>${antiSnipeTotal?(antiSnipeCount/antiSnipeTotal*100).toFixed(0):0}%</td></tr>
+        <tr><td>OFFs</td><td><b>${offCount}</b></td><td>${offVillages.length}</td><td>${offVillages.length?(offCount/offVillages.length*100).toFixed(0):0}%</td></tr>
+        <tr><td>Condes</td><td><b>${snobCount}</b></td><td>${snobVillages.length}</td><td>${snobVillages.length?(snobCount/snobVillages.length*100).toFixed(0):0}%</td></tr>
+        <tr><td>Fakes</td><td><b>${fakeMissions.length}</b></td><td>—</td><td>—</td></tr>
+        <tr><td>Anti-snipes</td><td><b>${antiSnipeCount}</b></td><td>${antiSnipeTotal}</td><td>${antiSnipeTotal?(antiSnipeCount/antiSnipeTotal*100).toFixed(0):0}%</td></tr>
       </tbody>
     </table>
   </div>`;
   
   // Métricas
-  html+=`<div class="phase"><h4>📈 Métricas da Operação</h4>
+  html+=`<div class="phase"><h4>📈 Métricas</h4>
     <div class="summary">
       <div class="stat ok"><div class="v">${fakeMissions.length}</div><div class="l">Fakes</div></div>
       <div class="stat bad"><div class="v">${offCount}</div><div class="l">OFFs</div></div>
@@ -683,7 +701,7 @@ function generateOperation(){
   </div>`;
   
   if(antiSnipeCount>0)
-    html+=`<div class="alert ok">🛡 <b>${antiSnipeCount}</b> anti-snipes programados — <b>${antiSnipeVillages}</b> defesas bloqueadas 1s antes.</div>`;
+    html+=`<div class="alert ok">🛡 <b>${antiSnipeCount}</b> anti-snipes — <b>${antiSnipeVillages}</b> defesas bloqueadas 1s antes.</div>`;
   
   // Anti-snipe
   allAntiSnipe.forEach(a=>{
@@ -733,7 +751,7 @@ function generateBBCode(){
   const world=+$('worldSpeed').value,t=getTreaty();
   let bb='';
   bb+=`[b][size=16][color=#840000]⚔ OPERAÇÃO MILITAR[/color][/size][/b]\n\n`;
-  bb+=`[b]Servidor:[/b] ${world}x · [b]Tratado:[/b] ${t.name} ([color=green]${t.protect}h[/color] proteção · [color=orange]${t.block}h[/color] bloqueio)\n`;
+  bb+=`[b]Servidor:[/b] ${world}x · [b]Tratado:[/b] ${t.name}\n`;
   bb+=`[b]Jogadores:[/b] ${p.players.length} · [b]Aldeias:[/b] ${p.alliesList.length}\n\n[hr]\n\n`;
   bb+=`[b][size=14][color=#840000]📦 Forças por Jogador[/color][/size][/b]\n\n`;
   p.players.forEach(pl=>{
@@ -749,8 +767,7 @@ function generateBBCode(){
   bb+=`[hr]\n\n[b][size=14][color=#840000]📈 Métricas[/color][/size][/b]\n`;
   bb+=`[img_axe] [b]${p.allMissions.filter(m=>!m.isFake&&m.type==='OFF').length}[/b] OFFs\n`;
   bb+=`[img_snob] [b]${p.allMissions.filter(m=>!m.isFake&&m.type==='Conde real').length}[/b] Condes\n`;
-  bb+=`[img_spy] [b]${p.allMissions.filter(m=>m.isFake).length}[/b] Fakes\n`;
-  bb+=`[img_ram] [b]${p.allMissions.filter(m=>m.type==='Anti-snipe').length}[/b] Anti-snipes\n\n[hr]\n\n`;
+  bb+=`[img_spy] [b]${p.allMissions.filter(m=>m.isFake).length}[/b] Fakes\n\n[hr]\n\n`;
   bb+=`[b][size=14][color=#840000]🕐 Ordem de Lançamento[/color][/size][/b]\n\n`;
   const sorted=[...p.allMissions].sort((a,b)=>a.launch-b.launch),byMinute={};
   sorted.forEach(m=>{const min=Math.floor(m.launch/60);if(!byMinute[min])byMinute[min]=[];byMinute[min].push(m)});
@@ -762,7 +779,7 @@ function generateBBCode(){
     });
     bb+='\n';
   });
-  bb+=`[hr]\n[i][color=#666]Gerado por [b]-AbaddoN-[/b] · KingsAge Planeador de Operações[/color][/i]\n`;
+  bb+=`[hr]\n[i][color=#666]Gerado por [b]-AbaddoN-[/b][/color][/i]\n`;
   return bb;
 }
 
@@ -771,7 +788,7 @@ function copyBBCode(){
   if(!bb){alert('Gera a operação primeiro.');return}
   const modal=document.createElement('div');
   modal.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
-  modal.innerHTML=`<div style="background:#F1EBDD;border:2px solid #CFAB65;padding:15px;max-width:900px;width:100%;max-height:90vh;overflow-y:auto;font-family:Verdana,Arial,sans-serif"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;border-bottom:2px solid #CFAB65;padding-bottom:8px"><b style="color:#840000;font-size:14px">📨 BB-Code para o KingsAge</b><button onclick="this.closest('div').parentElement.parentElement.remove()" style="background:#b9675c;color:#fff;border:1px solid #8a3d35;padding:3px 10px;cursor:pointer;font-weight:bold">X</button></div><p style="font-size:11px;color:#666;margin:0 0 10px 0">Copia e cola numa mensagem do KingsAge.</p><textarea id="bbCodeOutput" style="width:100%;height:400px;font-family:'Courier New',monospace;font-size:11px;border:1px solid #CFAB65;background:#fff;padding:10px;color:#2a1410" readonly></textarea><div style="display:flex;gap:8px;margin-top:10px"><button onclick="document.getElementById('bbCodeOutput').select();document.execCommand('copy');this.textContent='✓ Copiado!'" style="background:#7aa87a;color:#fff;border:1px solid #5a8a5a;padding:8px 16px;cursor:pointer;font-weight:bold">📋 Copiar BB-Code</button><button onclick="this.closest('div').parentElement.parentElement.remove()" style="background:#e8d8b0;border:1px solid #c4a76e;padding:8px 16px;cursor:pointer">Fechar</button></div></div>`;
+  modal.innerHTML=`<div style="background:#F1EBDD;border:2px solid #CFAB65;padding:15px;max-width:900px;width:100%;max-height:90vh;overflow-y:auto;font-family:Verdana,Arial,sans-serif"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;border-bottom:2px solid #CFAB65;padding-bottom:8px"><b style="color:#840000;font-size:14px">📨 BB-Code</b><button onclick="this.closest('div').parentElement.parentElement.remove()" style="background:#b9675c;color:#fff;border:1px solid #8a3d35;padding:3px 10px;cursor:pointer;font-weight:bold">X</button></div><textarea id="bbCodeOutput" style="width:100%;height:400px;font-family:'Courier New',monospace;font-size:11px;border:1px solid #CFAB65;background:#fff;padding:10px" readonly></textarea><div style="display:flex;gap:8px;margin-top:10px"><button onclick="document.getElementById('bbCodeOutput').select();document.execCommand('copy');this.textContent='✓ Copiado!'" style="background:#7aa87a;color:#fff;border:1px solid #5a8a5a;padding:8px 16px;cursor:pointer;font-weight:bold">📋 Copiar</button><button onclick="this.closest('div').parentElement.parentElement.remove()" style="background:#e8d8b0;border:1px solid #c4a76e;padding:8px 16px;cursor:pointer">Fechar</button></div></div>`;
   document.body.appendChild(modal);
   document.getElementById('bbCodeOutput').value=bb;
 }
