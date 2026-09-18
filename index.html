@@ -4,299 +4,211 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>KingsAge Ops Planner — by -AbaddoN-</title>
+<meta name="author" content="-AbaddoN-">
+<meta name="description" content="Planeador de operações militares para alianças do KingsAge.">
+<!--
+  ═══════════════════════════════════════════════════════════════
+  ⚔ KingsAge Ops Planner
+  Autor: -AbaddoN-
+  © 2026 - Todos os direitos reservados
+  ═══════════════════════════════════════════════════════════════
+-->
 <style>
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;padding:0}
-body{
-  background:#1a1208 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAFElEQVQIW2NkYGD4z8DAwMgABXAGAA4dAgHqL0G0AAAAAElFTkSuQmCC");
-  font-family:Verdana,Arial,sans-serif;font-size:12px;line-height:15px;color:#000;
-}
-#main-content{
-  max-width:1600px;margin:0 auto;padding:15px;background:#F1EBDD;
-  border-left:1px solid #CFAB65;border-right:1px solid #CFAB65;min-height:100vh;
-}
+*{box-sizing:border-box}html,body{height:100%;margin:0;padding:0}
+body{background:#1a1208 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAFElEQVQIW2NkYGD4z8DAwMgABXAGAA4dAgHqL0G0AAAAAElFTkSuQmCC");font-family:Verdana,Arial,sans-serif;font-size:12px;line-height:15px;color:#000}
+#main-content{max-width:1600px;margin:0 auto;padding:15px;background:#F1EBDD;border-left:1px solid #CFAB65;border-right:1px solid #CFAB65;min-height:100vh}
 h1{font-size:18px;color:#840000;margin:0 0 5px 0;padding-top:5px}
 h2{font-size:14px;color:#840000;margin:0;border-bottom:2px solid #CFAB65;padding-bottom:3px;display:flex;justify-content:space-between;align-items:center;gap:6px}
 h3{font-size:12px;font-weight:bold;color:#5a3d1a;margin:12px 0 5px 0}
 h4{font-size:12px;font-weight:bold;font-style:italic;margin:8px 0 4px 0}
 p{margin:0 0 8px 0;line-height:15px}
-a{color:#840000;text-decoration:none;cursor:pointer}
-a:hover{color:#072350}
+a{color:#840000;text-decoration:none;cursor:pointer}a:hover{color:#072350}
 label{display:block;color:#5a3d1a;font-size:11px;margin:6px 0 3px 0;font-weight:bold}
-input,textarea,select{
-  font-family:Verdana,Arial,sans-serif;font-size:11px;
-  border:1px solid #c4a76e;background-color:#f6dba4;
-  padding:4px 5px;color:#000;width:100%;
-}
+input,textarea,select{font-family:Verdana,Arial,sans-serif;font-size:11px;border:1px solid #c4a76e;background-color:#f6dba4;padding:4px 5px;color:#000;width:100%}
 textarea{font-family:"Courier New",monospace;resize:vertical}
-button,input[type=submit]{
-  font-family:Verdana,Arial,sans-serif;font-size:11px;
-  border:1px solid #c4a76e;background-color:#d6b371;
-  padding:5px 12px;cursor:pointer;color:#2a1410;font-weight:bold;
-}
+button,input[type=submit]{font-family:Verdana,Arial,sans-serif;font-size:11px;border:1px solid #c4a76e;background-color:#d6b371;padding:5px 12px;cursor:pointer;color:#2a1410;font-weight:bold}
 button:hover,input[type=submit]:hover{border:1px solid #b89251;background-color:#b48f52}
-button.sec{background-color:#e8d8b0;font-weight:normal}
-button.sec:hover{background-color:#d4c090}
-button.danger{background-color:#b9675c;color:#fff;border-color:#8a3d35}
-button.danger:hover{background-color:#8a3d35}
-button.blue{background-color:#7a99b8;color:#fff;border-color:#5a7a9a}
-button.blue:hover{background-color:#5a7a9a}
-button.green{background-color:#7aa87a;color:#fff;border-color:#5a8a5a}
-button.green:hover{background-color:#5a8a5a}
+button.sec{background-color:#e8d8b0;font-weight:normal}button.sec:hover{background-color:#d4c090}
+button.danger{background-color:#b9675c;color:#fff;border-color:#8a3d35}button.danger:hover{background-color:#8a3d35}
+button.blue{background-color:#7a99b8;color:#fff;border-color:#5a7a9a}button.blue:hover{background-color:#5a7a9a}
+button.green{background-color:#7aa87a;color:#fff;border-color:#5a8a5a}button.green:hover{background-color:#5a8a5a}
 button.small{padding:3px 7px;font-size:10px}
-
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.card{
-  background:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAFElEQVQIW2NkYGD4z8DAwMgABXAGAA4dAgHqL0G0AAAAAElFTkSuQmCC") #EFE6C9;
-  border:1px solid #CFAB65;padding:10px;margin-bottom:12px;
-}
+.card{background:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAFElEQVQIW2NkYGD4z8DAwMgABXAGAA4dAgHqL0G0AAAAAElFTkSuQmCC") #EFE6C9;border:1px solid #CFAB65;padding:10px;margin-bottom:12px}
 .card h2{margin:-10px -10px 10px -10px;padding:6px 10px;background:#E1D7BC;border-bottom:1px solid #CFAB65;font-size:13px}
 #results{grid-column:1/-1}
-
 table.borderlist{width:100%;border-collapse:collapse;border:1px solid #CFAB65;margin:5px 0;background:#F8F4E8;font-size:11px}
 table.borderlist th{background:#E1D7BC;padding:4px 6px;border:1px solid #CFAB65;text-align:left;font-size:11px;color:#5a3d1a}
 table.borderlist td{background:#F8F4E8;padding:3px 6px;border:1px solid #CFAB65;font-size:11px}
-table.borderlist tr:nth-child(even) td{background:#F1EBDD}
-table.borderlist tr:hover td{background:#E3C693}
-
+table.borderlist tr:nth-child(even) td{background:#F1EBDD}table.borderlist tr:hover td{background:#E3C693}
 .summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:5px;margin-bottom:10px}
 .stat{background:#F8F4E8;border:1px solid #CFAB65;padding:6px 8px;text-align:center}
 .stat .v{font-size:16px;color:#840000;font-weight:bold;line-height:20px}
 .stat .l{font-size:10px;color:#666;text-transform:uppercase;margin-top:2px}
-.stat.ok .v{color:#2a7a2a}
-.stat.warn .v{color:#b8860b}
-.stat.bad .v{color:#990000}
-
+.stat.ok .v{color:#2a7a2a}.stat.warn .v{color:#b8860b}.stat.bad .v{color:#990000}
 .alert{padding:6px 10px;border-radius:2px;margin:6px 0;font-size:11px;border:1px solid}
 .alert.ok{background:#e8f5e8;border-color:#7aa87a;color:#2a7a2a}
 .alert.bad{background:#fde8e8;border-color:#b9675c;color:#990000}
 .alert.warn{background:#fdf5e0;border-color:#d4b060;color:#8a6a10}
 .alert.info{background:#e8f0f8;border-color:#7a99b8;color:#2a5a7a}
-
 .phase{background:#F8F4E8;border:1px solid #CFAB65;padding:8px;margin:6px 0}
 .phase h4{color:#840000;margin:0 0 6px 0;font-style:normal}
-
 .phase-card,.player-block{background:#F8F4E8;border:1px solid #CFAB65;border-left:4px solid #CFAB65;padding:8px;margin:6px 0}
 .player-block{border-left-color:#7a99b8}
 .phase-card .ph-header,.player-block .ph-header{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:6px}
-
 .timeline{position:relative;height:40px;background:#fff;border:1px solid #CFAB65;margin:8px 0;overflow:hidden}
 .tl-bar{position:absolute;top:0;height:100%;opacity:.85}
-.tl-protect{background:#a8d8a0}
-.tl-block{background:#e8d8a0}
-.tl-free{background:#e8a8a0}
+.tl-protect{background:#a8d8a0}.tl-block{background:#e8d8a0}.tl-free{background:#e8a8a0}
 .tl-marker{position:absolute;top:0;height:100%;width:2px;background:#840000;z-index:2}
 .tl-label{position:absolute;bottom:1px;font-size:9px;color:#000;z-index:3;white-space:nowrap}
 .tl-legend{display:flex;gap:10px;flex-wrap:wrap;font-size:10px;margin-top:4px}
 .tl-legend span{display:flex;align-items:center;gap:3px}
 .tl-dot{width:10px;height:10px;border-radius:2px;display:inline-block;border:1px solid #999}
-
 .village-row{background:#F8F4E8;border:1px solid #CFAB65;padding:4px 6px;margin:2px 0;font-size:10px;display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap}
-.village-row.off{border-left:3px solid #b9675c}
-.village-row.def{border-left:3px solid #7aa87a}
-.village-row.mixed{border-left:3px solid #d4b060}
-
+.village-row.off{border-left:3px solid #b9675c}.village-row.def{border-left:3px solid #7aa87a}.village-row.mixed{border-left:3px solid #d4b060}
 .pill{display:inline-block;padding:1px 5px;border-radius:8px;font-size:10px;background:#E3C693;border:1px solid #CFAB65}
 .pill.off{background:#f0c0b8;border-color:#b9675c;color:#8a2a1a}
 .pill.def{background:#c8e8c8;border-color:#7aa87a;color:#2a5a2a}
 .pill.fake{background:#d8c0e8;border-color:#8b6fa5;color:#5a3a7a}
 .pill.snob{background:#f0d8a0;border-color:#c99a45;color:#8a6a10}
-
 .export-box{background:#fff;border:1px solid #CFAB65;padding:8px;font:11px "Courier New",monospace;white-space:pre;overflow:auto;max-height:300px;color:#2a1410}
 .snipe-time{font-size:14px;color:#840000;font-weight:bold;font-family:"Courier New",monospace}
-
 .row{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
 .row4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px}
 .row5{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
-
 .small{font-size:10px;color:#666}
 .status{margin-top:5px;color:#2a7a2a;font-size:11px;font-weight:bold}
 .empty{padding:20px;color:#666;text-align:center;font-style:italic}
-
 .troop-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:4px;margin:6px 0}
 .troop-stat{background:#F8F4E8;border:1px solid #CFAB65;padding:5px;text-align:center}
 .troop-stat .icon{font-size:14px}
 .troop-stat .v{font-size:13px;color:#840000;font-weight:bold;line-height:16px}
 .troop-stat .l{font-size:9px;color:#666;text-transform:uppercase}
-
-.tip{
-  display:inline-block;width:14px;height:14px;line-height:14px;
-  text-align:center;background:#840000;color:#fff;border-radius:50%;
-  font-size:10px;font-weight:bold;cursor:help;margin-left:4px;
-  position:relative;vertical-align:middle;font-family:Arial,sans-serif;
-}
-.tip:hover::after{
-  content:attr(data-tip);position:absolute;left:50%;transform:translateX(-50%);
-  bottom:130%;background:#2a1410;color:#F8F4E8;padding:6px 9px;
-  border:1px solid #CFAB65;border-radius:3px;font-size:10px;font-weight:normal;
-  white-space:normal;width:240px;z-index:100;text-align:left;line-height:1.4;
-  box-shadow:0 2px 6px rgba(0,0,0,0.4);font-family:Verdana,Arial,sans-serif;
-}
-.tip:hover::before{
-  content:"";position:absolute;left:50%;transform:translateX(-50%);
-  bottom:120%;border:6px solid transparent;border-top-color:#2a1410;z-index:101;
-}
-.tip-tl:hover::after{left:0;transform:none}
-.tip-tl:hover::before{left:10px;transform:none}
-.tip-tr:hover::after{left:auto;right:0;transform:none}
-.tip-tr:hover::before{left:auto;right:10px;transform:none}
-
-footer{
-  margin-top:25px;padding:15px 0 8px 0;border-top:2px solid #CFAB65;
-  text-align:center;line-height:1.7;
-}
-footer .sig{
-  font-family:Georgia,"Times New Roman",serif;font-size:16px;
-  color:#840000;font-weight:bold;letter-spacing:2px;
-  text-shadow:1px 1px 0 #E1D7BC;
-}
+.tip{display:inline-block;width:14px;height:14px;line-height:14px;text-align:center;background:#840000;color:#fff;border-radius:50%;font-size:10px;font-weight:bold;cursor:help;margin-left:4px;position:relative;vertical-align:middle;font-family:Arial,sans-serif}
+.tip:hover::after{content:attr(data-tip);position:absolute;left:50%;transform:translateX(-50%);bottom:130%;background:#2a1410;color:#F8F4E8;padding:6px 9px;border:1px solid #CFAB65;border-radius:3px;font-size:10px;font-weight:normal;white-space:normal;width:240px;z-index:100;text-align:left;line-height:1.4;box-shadow:0 2px 6px rgba(0,0,0,0.4);font-family:Verdana,Arial,sans-serif}
+.tip:hover::before{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:120%;border:6px solid transparent;border-top-color:#2a1410;z-index:101}
+.tip-tl:hover::after{left:0;transform:none}.tip-tl:hover::before{left:10px;transform:none}
+.tip-tr:hover::after{left:auto;right:0;transform:none}.tip-tr:hover::before{left:auto;right:10px;transform:none}
+footer{margin-top:25px;padding:15px 0 8px 0;border-top:2px solid #CFAB65;text-align:center;line-height:1.7}
+footer .sig{font-family:Georgia,"Times New Roman",serif;font-size:16px;color:#840000;font-weight:bold;letter-spacing:2px;text-shadow:1px 1px 0 #E1D7BC}
 footer .tool-name{font-size:11px;color:#5a3d1a;margin-top:3px}
 footer .note{font-size:10px;color:#888;margin-top:6px;font-style:italic}
-
-@media(max-width:900px){
-  .grid,.row,.row3,.row4,.row5{grid-template-columns:1fr}
-  #results{grid-column:auto}
-}
+.snippet-box{background:#1a1a1a;color:#c9e0a8;border:1px solid #CFAB65;padding:12px;font:11px "Courier New",monospace;white-space:pre;overflow:auto;max-height:200px;margin:8px 0}
+.snippet-steps{background:#fdf5e0;border-left:3px solid #d4b060;padding:10px;margin:8px 0;font-size:11px}
+.snippet-steps ol{margin:4px 0 0 20px;padding:0}
+.snippet-steps li{margin:3px 0}
+@media(max-width:900px){.grid,.row,.row3,.row4,.row5{grid-template-columns:1fr}#results{grid-column:auto}}
 </style>
 </head>
 <body>
 <div id="main-content">
 
-<h1>⚔ KingsAge Planeador de Operações <span style="font-size:11px;color:#666;font-weight:normal">— Servidor: <b id="srvLabel">1x</b></span>
-  <span class="tip tip-tr" data-tip="Planeador completo para operações militares de aliança no KingsAge. Adiciona os jogadores, cola as overviews, define fases e alvos. A tool calcula automaticamente as horas de lançamento, tratados de paz e anti-snipes.">?</span>
-</h1>
+<h1>⚔ KingsAge Planeador de Operações <span style="font-size:11px;color:#666;font-weight:normal">— Servidor: <b id="srvLabel">1x</b></span></h1>
 
 <div class="grid">
 
-<section class="card">
-<h2>🟢 Jogadores Aliados
-  <span class="tip tip-tr" data-tip="Adiciona um bloco por jogador da tua aliança. Cada jogador cola a overview do KingsAge no seu bloco. A tool extrai automaticamente as coordenadas e as tropas de cada aldeia.">?</span>
-</h2>
-<p class="small">Cola a overview de cada jogador. A tool agrega todas as aldeias.
-  <span class="tip" data-tip="Para obter a overview: no KingsAge abre a página 'Visão geral das aldeias' (overview_villages), seleciona tudo (Ctrl+A), copia (Ctrl+C) e cola aqui.">?</span>
-</p>
-<div id="playersList"></div>
+<!-- ===== SNIPPET ===== -->
+<section class="card" style="grid-column:1/-1">
+<h2>📋 Como extrair a overview do KingsAge <span class="tip tip-tr" data-tip="Script que lê os dados diretamente da página do KingsAge. Não guarda nem envia nada — tudo local.">?</span></h2>
+<div class="snippet-steps">
+  <b>Passo 1:</b> Abre o KingsAge na página <b>Visão geral das aldeias</b><br>
+  <b>Passo 2:</b> Pressiona <b>F12</b> → separador <b>Console</b><br>
+  <b>Passo 3:</b> Cola o código abaixo e pressiona <b>Enter</b><br>
+  <b>Passo 4:</b> Aparece uma janela no jogo — clica dentro, <b>Ctrl+A</b>, <b>Ctrl+C</b><br>
+  <b>Passo 5:</b> Cola no campo "Overview" em baixo
+</div>
+<div class="snippet-box" id="snippetText"></div>
 <div class="row">
-<button onclick="addPlayer()" title="Cria um novo bloco para colar a overview de outro jogador">+ Adicionar Jogador</button>
-<button class="blue" onclick="parseAllPlayers()" title="Processa todas as overviews coladas de uma só vez">🔍 Processar Todos</button>
+  <button class="green" onclick="copySnippet()">📋 Copiar snippet</button>
+  <button class="sec" onclick="showSnippetInfo()">ℹ Como funciona</button>
+</div>
+</section>
+
+<!-- ===== ALDEIAS ALIADAS ===== -->
+<section class="card" style="grid-column:1/-1">
+<h2>🟢 Aldeias Aliadas <span class="tip tip-tr" data-tip="Cola aqui o JSON extraído da consola do KingsAge.">?</span></h2>
+<label>Overview do KingsAge (JSON)</label>
+<textarea id="overviewInput" style="height:140px" placeholder='Cola aqui o JSON da consola...'></textarea>
+<div class="row3">
+  <div><label>Jogador</label><input id="allyPlayer" placeholder="Nome do jogador"></div>
+  <button class="blue" onclick="parseOverviewJSON()">🔍 Processar Overview</button>
+  <button class="sec" onclick="loadSampleOverview()">Exemplo</button>
 </div>
 <div id="overviewStatus" class="status"></div>
 </section>
 
-<section class="card">
-<h2>⚙ Configuração
-  <span class="tip tip-tr" data-tip="Configuração geral da operação. A velocidade do servidor afeta o cálculo de todos os tempos de viagem. O mínimo de poder ofensivo define a partir de que valor uma aldeia é considerada uma OFF completa.">?</span>
-</h2>
-<div class="row3">
-<div>
-  <label>Velocidade do servidor
-    <span class="tip" data-tip="Velocidade do mundo onde jogas. 1x = servidor normal, 2x = todas as tropas viajam 2× mais rápido, etc. Este valor é configurado pelo servidor, não pelos jogadores.">?</span>
-  </label>
-  <select id="worldSpeed" title="Velocidade do servidor">
-    <option value="1" selected>1x</option>
-    <option value="2">2x</option>
-    <option value="3">3x</option>
-    <option value="4">4x</option>
-    <option value="5">5x</option>
-    <option value="10">10x</option>
-  </select>
-</div>
-<div>
-  <label>Mín. poder ofensivo p/ OFF
-    <span class="tip" data-tip="Poder ofensivo mínimo para uma aldeia ser considerada como tendo uma OFF completa. Poder ofensivo = Guerreiros + Cruzados + Aríetes + Catapultas. Recomendado: 5000.">?</span>
-  </label>
-  <input id="minOffPower" type="number" value="5000">
-</div>
-<div>
-  <label>Escolta do conde
-    <span class="tip" data-tip="Número de tropas que acompanham o conde no ataque de conquista. Máximo recomendado: 100 tropas. O resto da OFF vai em ataques separados para não desperdiçar poder.">?</span>
-  </label>
-  <input id="snobEscort" type="number" value="100">
-</div>
-</div>
-
-<h3>Aldeia de Defesa Padrão (para fakes)
-  <span class="tip" data-tip="Composição de tropas que cada aldeia de defesa deve ter para gerar fakes maciçamente. Esta composição permite enviar muitos fakes sem esgotar as tropas.">?</span>
-</h3>
-<div class="row5">
-<div><label>Milícias <span class="tip" data-tip="Tropa mais fraca, usada como 'carne' nos fakes (89 milícias por fake).">?</span></label><input id="defFarmer" type="number" value="4450"></div>
-<div><label>Espiões <span class="tip" data-tip="Usados em fakes de espionagem (5 espiões por fake) ou combinados com aríete.">?</span></label><input id="defSpy" type="number" value="2000"></div>
-<div><label>Cav. Negros <span class="tip" data-tip="Tropa de defesa. Fica em casa para proteger a aldeia, não vai nos fakes.">?</span></label><input id="defBlackknight" type="number" value="6000"></div>
-<div><label>Aríetes <span class="tip" data-tip="1 aríete por fake para simular um ataque real (o inimigo vê aríete e pensa que é ataque a sério).">?</span></label><input id="defRam" type="number" value="50"></div>
-<div><label>Fakes/aldeia <span class="tip" data-tip="Número de fakes que cada aldeia envia na operação. Valores altos (50-100) criam mais ruído e escondem melhor os ataques reais.">?</span></label><input id="fakesPerVillage" type="number" value="50"></div>
-</div>
-
-<h3>Tratado de Paz
-  <span class="tip" data-tip="Mecânica do tratado de paz do KingsAge. Durante a proteção, ataques que chegam são cancelados. Durante o bloqueio, o inimigo não pode mover tropas (mas nós já podemos atacá-lo).">?</span>
-</h3>
-<div class="row3">
-<div>
-  <label>Tipo <span class="tip" data-tip="Pequeno: 3h proteção + 9h bloqueio. Médio: 6h + 18h. Grande: 18h + 36h. Confirma os valores do teu servidor.">?</span></label>
-  <select id="treatyType">
-    <option value="small" selected>Pequeno</option>
-    <option value="medium">Médio</option>
-    <option value="large">Grande</option>
-  </select>
-</div>
-<div>
-  <label>Proteção (h) <span class="tip" data-tip="Duração da proteção em horas. Durante este período, todos os ataques que chegam à aldeia protegida são CANCELADOS.">?</span></label>
-  <input id="treatyProtect" type="number" value="3">
-</div>
-<div>
-  <label>Bloqueio (h) <span class="tip" data-tip="Duração do bloqueio em horas. Após a proteção, o inimigo não pode mover tropas nem atacar. Nós já podemos atacá-lo livremente.">?</span></label>
-  <input id="treatyBlock" type="number" value="9">
-</div>
+<!-- ===== JOGADORES PROCESSADOS ===== -->
+<section class="card" style="grid-column:1/-1" id="playersSection" style="display:none">
+<h2>👥 Jogadores Processados <span class="tip tip-tr" data-tip="Lista de jogadores com overview processada. Podes adicionar mais jogadores da tua aliança.">?</span></h2>
+<div id="playersList"></div>
+<div class="row">
+  <button class="sec" onclick="addPlayer()">+ Adicionar jogador manualmente</button>
+  <button class="danger" onclick="clearAllPlayers()">Limpar todos</button>
 </div>
 </section>
 
+<!-- ===== CONFIG ===== -->
 <section class="card">
-<h2>📅 Fases da Operação
-  <span class="tip tip-tr" data-tip="Uma operação pode ter várias fases em horas diferentes. Por exemplo: Fase 1 (09:00) só fakes para confundir, Fase 2 (13:10) ataques reais + condes. Cada fase tem alvos próprios.">?</span>
-</h2>
-<p class="small">Define fases em horas distintas. Ex: fake às 09:00, real às 13:10.</p>
+<h2>⚙ Configuração <span class="tip tip-tr" data-tip="Configuração geral da operação.">?</span></h2>
+<div class="row3">
+<div><label>Velocidade do servidor</label>
+<select id="worldSpeed"><option value="1" selected>1x</option><option value="2">2x</option><option value="3">3x</option><option value="4">4x</option><option value="5">5x</option><option value="10">10x</option></select></div>
+<div><label>Mín. poder ofensivo</label><input id="minOffPower" type="number" value="5000"></div>
+<div><label>Escolta do conde</label><input id="snobEscort" type="number" value="100"></div>
+</div>
+<h3>Aldeia de Defesa Padrão</h3>
+<div class="row5">
+<div><label>Milícias</label><input id="defFarmer" type="number" value="4450"></div>
+<div><label>Espiões</label><input id="defSpy" type="number" value="2000"></div>
+<div><label>Cav. Negros</label><input id="defBlackknight" type="number" value="6000"></div>
+<div><label>Aríetes</label><input id="defRam" type="number" value="50"></div>
+<div><label>Fakes/aldeia</label><input id="fakesPerVillage" type="number" value="50"></div>
+</div>
+<h3>Tratado de Paz</h3>
+<div class="row3">
+<div><label>Tipo</label><select id="treatyType"><option value="small" selected>Pequeno</option><option value="medium">Médio</option><option value="large">Grande</option></select></div>
+<div><label>Proteção (h)</label><input id="treatyProtect" type="number" value="3"></div>
+<div><label>Bloqueio (h)</label><input id="treatyBlock" type="number" value="9"></div>
+</div>
+</section>
+
+<!-- ===== FASES ===== -->
+<section class="card">
+<h2>📅 Fases da Operação <span class="tip tip-tr" data-tip="Cada fase tem uma hora e um tipo de missão.">?</span></h2>
 <div id="phasesList"></div>
 <div class="row">
-<button onclick="addPhase()" title="Adiciona uma fase personalizável">+ Fase</button>
-<button onclick="addFakePhase()" title="Adiciona uma fase de fakes pré-configurada (09:00)">+ Fake Rápida</button>
-<button onclick="addRealPhase()" title="Adiciona uma fase de ataques reais pré-configurada (13:10)">+ Real Rápida</button>
-<button class="danger" onclick="clearPhases()" title="Remove todas as fases">Limpar</button>
+<button onclick="addPhase()">+ Fase</button>
+<button onclick="addFakePhase()">+ Fake Rápida</button>
+<button onclick="addRealPhase()">+ Real Rápida</button>
+<button class="danger" onclick="clearPhases()">Limpar</button>
 </div>
 </section>
 
+<!-- ===== ALVOS ===== -->
 <section class="card">
-<h2>🎯 Alvos
-  <span class="tip tip-tr" data-tip="Coordenadas das aldeias inimigas que queres atacar. Podes adicionar manualmente ou usar o botão 'Sugerir' que analisa as distâncias a partir das tuas aldeias.">?</span>
-</h2>
-<label>Coordenadas dos alvos (uma por linha, formato <code>X|Y</code>)
-  <span class="tip" data-tip="Formato: 537|519 (uma coordenada por linha). Podes colar diretamente da overview do jogo.">?</span>
-</label>
+<h2>🎯 Alvos <span class="tip tip-tr" data-tip="Coordenadas inimigas a atacar.">?</span></h2>
 <textarea id="targetsInput" style="height:80px" placeholder="537|519&#10;533|512&#10;530|512"></textarea>
 <div class="row">
-<button class="blue" onclick="suggestTargets()" title="Analisa as distâncias das tuas aldeias aos alvos e sugere os melhores">💡 Sugerir</button>
-<button onclick="loadSampleTargets()" title="Preenche com alvos de exemplo para testar">Exemplo</button>
+<button class="blue" onclick="suggestTargets()">💡 Sugerir</button>
+<button onclick="loadSampleTargets()">Exemplo</button>
 </div>
 <div id="suggestOutput"></div>
 </section>
 
+<!-- ===== INIMIGAS ===== -->
 <section class="card">
-<h2>🔴 Aldeias Inimigas (anti-snipe)
-  <span class="tip tip-tr" data-tip="Coordenadas das aldeias inimigas que podem enviar cavaleiros negros para defender os teus condes (snipe). A tool calcula quando tens de as atacar para bloquear essa defesa.">?</span>
-</h2>
-<label>Coordenadas inimigas conhecidas
-  <span class="tip" data-tip="Aldeias inimigas que podem estar ao alcance dos teus ataques com conde. A tool calcula a hora máxima que ele tem para enviar snipe e ataca 1s antes.">?</span>
-</label>
+<h2>🔴 Aldeias Inimigas <span class="tip tip-tr" data-tip="Aldeias que podem snipar os teus condes.">?</span></h2>
 <textarea id="enemies" style="height:80px" placeholder="520|510&#10;525|515&#10;530|505"></textarea>
 <div id="enemyStatus" class="status"></div>
-<button onclick="loadSampleEnemies()" title="Preenche com aldeias inimigas de exemplo">Exemplo</button>
+<button onclick="loadSampleEnemies()">Exemplo</button>
 </section>
 
+<!-- ===== RESULTADOS ===== -->
 <section id="results" class="card">
-<h2>📊 Plano Operacional
-  <span class="tip tip-tr" data-tip="Depois de clicares em 'Gerar Operação', aparece aqui: resumo de tropas, tropas usadas, métricas, anti-snipes, fases, lista cronológica e formato para partilhar.">?</span>
-</h2>
-<button onclick="generateOperation()" style="font-size:13px;padding:8px 20px" title="Calcula a operação completa com todos os dados inseridos">⚔ GERAR OPERAÇÃO COMPLETA</button>
-<div id="output" class="empty">Adiciona jogadores, processa overviews, define fases e alvos. Clica em "Gerar Operação".</div>
+<h2>📊 Plano Operacional <span class="tip tip-tr" data-tip="Resultado completo: resumo de tropas por jogador, fases, anti-snipes e BB-Code.">?</span></h2>
+<button onclick="generateOperation()" style="font-size:13px;padding:8px 20px">⚔ GERAR OPERAÇÃO COMPLETA</button>
+<div id="output" class="empty">Processa as overviews, define fases e alvos. Clica em "Gerar Operação".</div>
 </section>
 
 </div>
@@ -304,124 +216,307 @@ footer .note{font-size:10px;color:#888;margin-top:6px;font-style:italic}
 <footer>
   <div class="sig">-AbaddoN-</div>
   <div class="tool-name">⚔ KingsAge Planeador de Operações</div>
-  <div class="note">Ferramenta de planeamento estratégico para alianças · v1.0</div>
+  <div class="note">© 2026 -AbaddoN- · Todos os direitos reservados · v1.2</div>
 </footer>
 
 </div>
 <script>
+/* ═══════════════════════════════════════════════════════════════
+   KingsAge Ops Planner — CORE
+   Autor: -AbaddoN-
+   © 2026 - Todos os direitos reservados
+   ═══════════════════════════════════════════════════════════════ */
 const $=id=>document.getElementById(id);
 
+/* ===== SNIPPET ===== */
+const SNIPPET = `(function(){
+  const villages = [];
+  const troopMap = {
+    'Milícia do fazendeiro':'farmer','Templário':'templar','Escudeiro':'squire',
+    'Guerreiro':'warrior','Arqueiro':'archer','Espião':'spy','Cruzado':'crusader',
+    'Cavaleiro negro':'blackknight','Aríete':'ram','Catapulta':'catapult','Conde':'snob'
+  };
+  document.querySelectorAll('tr').forEach(row => {
+    const cells = row.querySelectorAll('td');
+    if(cells.length < 12) return;
+    const titleSpan = cells[0].querySelector('span[title]');
+    if(!titleSpan) return;
+    const title = titleSpan.getAttribute('title');
+    const coordMatch = title.match(/\\((\\d{1,3})\\|(\\d{1,3})\\)/);
+    if(!coordMatch) return;
+    const x = parseInt(coordMatch[1], 10);
+    const y = parseInt(coordMatch[2], 10);
+    const name = title.replace(/\\s*\\(\\d+\\|\\d+\\).*$/, '').trim();
+    const troops = {farmer:0,templar:0,squire:0,warrior:0,archer:0,spy:0,crusader:0,blackknight:0,ram:0,catapult:0,snob:0};
+    cells.forEach(cell => {
+      const t = cell.getAttribute('title') || '';
+      const m = t.match(/^([\\d\\.]+)\\s+(.+)$/);
+      if(m){
+        const count = parseInt(m[1].replace(/\\./g,''), 10);
+        const unit = m[2].trim();
+        if(troopMap[unit]) troops[troopMap[unit]] = count;
+      }
+    });
+    const snobLink = cells[cells.length-1].querySelector('a');
+    if(snobLink){
+      const st = snobLink.textContent.trim();
+      if(/^\\d+$/.test(st)) troops.snob = parseInt(st, 10);
+    }
+    villages.push({x, y, name, troops});
+  });
+  const json = JSON.stringify(villages);
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:999999;display:flex;align-items:center;justify-content:center;padding:20px;font-family:Verdana,sans-serif';
+  overlay.innerHTML = '<div style="background:#F1EBDD;border:2px solid #CFAB65;padding:20px;max-width:900px;width:100%;max-height:90vh;overflow-y:auto">'
+    + '<div style="font-size:16px;color:#840000;font-weight:bold;margin-bottom:10px">✅ ' + villages.length + ' aldeias extraídas!</div>'
+    + '<div style="font-size:12px;color:#5a3d1a;margin-bottom:10px"><b>1.</b> Clica dentro da caixa abaixo<br><b>2.</b> <b>Ctrl+A</b> (selecionar tudo)<br><b>3.</b> <b>Ctrl+C</b> (copiar)<br><b>4.</b> Volta à dashboard e cola (Ctrl+V)</div>'
+    + '<textarea id="kes-output" style="width:100%;height:300px;font-family:Courier New,monospace;font-size:11px;border:1px solid #CFAB65;background:#fff;padding:10px" readonly>' + json + '</textarea>'
+    + '<div style="margin-top:10px;text-align:right">'
+    + '<button id="kes-copy" style="background:#7aa87a;color:#fff;border:1px solid #5a8a5a;padding:8px 16px;cursor:pointer;font-weight:bold">📋 Copiar</button> '
+    + '<button id="kes-close" style="background:#e8d8b0;border:1px solid #c4a76e;padding:8px 16px;cursor:pointer">Fechar</button>'
+    + '</div></div>';
+  document.body.appendChild(overlay);
+  const ta = document.getElementById('kes-output');
+  ta.focus(); ta.select();
+  document.getElementById('kes-copy').onclick = function(){
+    ta.select();
+    try { document.execCommand('copy'); alert('✅ Copiado! Cola na dashboard.'); }
+    catch(e){ alert('⚠ Usa Ctrl+A e Ctrl+C manualmente.'); }
+  };
+  document.getElementById('kes-close').onclick = function(){ overlay.remove(); };
+  console.log('✅ ' + villages.length + ' aldeias. Janela aberta.');
+})();`;
+
+/* ===== Constantes ===== */
 const UNIT_SPEEDS={farmer:20,templar:22,squire:18,warrior:18,archer:18,spy:9,crusader:10,blackknight:11,ram:30,catapult:30,snob:35};
-
 const FAKE_TYPES={
-  fake:      {name:'Fake',              troops:'89 milícias + 1 aríete',  unit:'ram'},
-  fakeSnob:  {name:'Conde falso',       troops:'1 conde falso',            unit:'snob'},
-  fakeSpy:   {name:'Fake espião',       troops:'5 espiões',                unit:'spy'},
-  fakeSpyRam:{name:'Fake espião+aríete',troops:'89 espiões + 1 aríete',   unit:'ram'},
+  fake:{name:'Fake',troops:'89 milícias + 1 aríete',unit:'ram'},
+  fakeSnob:{name:'Conde falso',troops:'1 conde falso',unit:'snob'},
+  fakeSpy:{name:'Fake espião',troops:'5 espiões',unit:'spy'},
+  fakeSpyRam:{name:'Fake espião+aríete',troops:'89 espiões + 1 aríete',unit:'ram'},
   fakeAxeRam:{name:'Fake guerreiro+aríete',troops:'89 guerreiros + 1 aríete',unit:'ram'},
-  realOff:   {name:'OFF',               troops:'OFF completa',            unit:'warrior'},
-  realSnob:  {name:'Conde real',        troops:'1 conde + escolta',       unit:'snob'}
+  realOff:{name:'OFF',troops:'OFF completa',unit:'warrior'},
+  realSnob:{name:'Conde real',troops:'1 conde + escolta',unit:'snob'}
 };
+const TROOP_LABELS={farmer:'Milícias',templar:'Templários',squire:'Escudeiros',warrior:'Guerreiros',archer:'Arqueiros',spy:'Espiões',crusader:'Cruzados',blackknight:'Cav. Negros',ram:'Aríetes',catapult:'Catapultas',snob:'Condes'};
+const TROOP_ICONS={farmer:'🛡',templar:'⚔',squire:'🗡',warrior:'⚔',archer:'🏹',spy:'👁',crusader:'🐎',blackknight:'🐴',ram:'🔨',catapult:'⚙',snob:'👑'};
+const TROOP_ORDER=['farmer','templar','squire','warrior','archer','spy','crusader','blackknight','ram','catapult','snob'];
 
-let players=[];
+let players=[]; // [{name, villages:[{x,y,name,troops,offPower}]}]
 let phases=[];
 let alliesList=[];
 let _suggestions=[];
 
-function parseCoords(text){
-  const out=[],seen=new Set();
-  const re=/(\d+)\s*\|\s*(\d+)/g;let m;
-  while((m=re.exec(text))){
-    const x=+m[1],y=+m[2],key=x+'|'+y;
-    if(!seen.has(key)){seen.add(key);out.push({x,y,key})}
-  }return out;
-}
+/* ===== Helpers ===== */
+function parseCoords(text){const out=[],seen=new Set();const re=/(\d+)\s*\|\s*(\d+)/g;let m;while((m=re.exec(text))){const x=+m[1],y=+m[2],key=x+'|'+y;if(!seen.has(key)){seen.add(key);out.push({x,y,key})}}return out}
 function secs(t){const[h,m,s]=t.split(':').map(Number);return h*3600+m*60+(s||0)}
-function fmt(v){
-  v=((v%86400)+86400)%86400;
-  const h=Math.floor(v/3600),m=Math.floor(v%3600/60),s=Math.floor(v%60);
-  return [h,m,s].map(n=>String(n).padStart(2,'0')).join(':')
-}
-function fmtDur(v){
-  const h=Math.floor(v/3600),m=Math.floor(v%3600/60),s=Math.floor(v%60);
-  return `${h}h${String(m).padStart(2,'0')}m${String(s).padStart(2,'0')}s`;
-}
+function fmt(v){v=((v%86400)+86400)%86400;const h=Math.floor(v/3600),m=Math.floor(v%3600/60),s=Math.floor(v%60);return[h,m,s].map(n=>String(n).padStart(2,'0')).join(':')}
+function fmtDur(v){const h=Math.floor(v/3600),m=Math.floor(v%3600/60),s=Math.floor(v%60);return `${h}h${String(m).padStart(2,'0')}m${String(s).padStart(2,'0')}s`}
+function fmtNum(n){return n.toLocaleString('pt-PT')}
 function dist(a,b){return Math.hypot(a.x-b.x,a.y-b.y)}
 function travelTime(from,to,u,w){return dist(from,to)*(UNIT_SPEEDS[u]/w)*60}
 function calcOffPower(t){return (t.warrior||0)+(t.crusader||0)+(t.ram||0)+(t.catapult||0)}
 
-function parseOverviewText(text){
-  const lines=text.split('\n').map(l=>l.trim()).filter(l=>l);
-  const villages=[];
-  const coordRe=/(\d{1,3})\s*[|\-]\s*(\d{1,3})/;
-  for(const line of lines){
-    const cm=line.match(coordRe);
-    if(!cm)continue;
-    const x=parseInt(cm[1],10),y=parseInt(cm[2],10);
-    const key=`${x}|${y}`;
-    const numbers=(line.match(/\b\d+\b/g)||[]).map(n=>parseInt(n,10));
-    const filtered=numbers.filter(n=>n!==x&&n!==y);
-    let raw;
-    if(filtered.length>=11)raw=filtered.slice(-11);
-    else{raw=filtered;while(raw.length<11)raw.push(0)}
-    const troops={
-      farmer:raw[0]||0,templar:raw[1]||0,squire:raw[2]||0,warrior:raw[3]||0,
-      archer:raw[4]||0,spy:raw[5]||0,crusader:raw[6]||0,blackknight:raw[7]||0,
-      ram:raw[8]||0,catapult:raw[9]||0,snob:raw[10]||0
-    };
-    const namePart=line.substring(0,line.indexOf(cm[0])).trim();
-    villages.push({key,x,y,name:namePart||key,troops,offPower:calcOffPower(troops)});
-  }
-  const seen=new Set();
-  return villages.filter(v=>{if(seen.has(v.key))return false;seen.add(v.key);return true});
-}
-
-function addPlayer(){
-  players.push({id:'p'+Date.now()+Math.random(),name:'Jogador '+(players.length+1),overviewText:'',villages:[]});
-  renderPlayers();
-}
-function removePlayer(id){players=players.filter(p=>p.id!==id);renderPlayers();aggregateAllies()}
-function updatePlayer(id,f,v){const p=players.find(x=>x.id===id);if(p)p[f]=v}
-function renderPlayers(){
-  const el=$('playersList');
-  if(!players.length){el.innerHTML='<p class="small">Sem jogadores. Clica em "+ Adicionar Jogador".</p>';return}
-  el.innerHTML=players.map(p=>`
-    <div class="player-block">
-      <div class="ph-header">
-        <input value="${p.name}" onchange="updatePlayer('${p.id}','name',this.value)" style="width:150px;font-weight:bold" title="Nome do jogador">
-        <span class="small">${p.villages.length} aldeias</span>
-        <button class="danger small" onclick="removePlayer('${p.id}')" title="Remover jogador">X</button>
-      </div>
-      <textarea style="height:70px" onchange="updatePlayer('${p.id}','overviewText',this.value)" placeholder="Cola aqui a overview do ${p.name}..." title="Cola a tabela da overview do KingsAge (Ctrl+A, Ctrl+C na página)"></textarea>
-      <button class="small" onclick="parsePlayer('${p.id}')" title="Processa apenas a overview deste jogador">Processar</button>
-    </div>
-  `).join('');
-}
-function parsePlayer(id){
-  const p=players.find(x=>x.id===id);
-  if(!p||!p.overviewText.trim()){alert('Cola a overview primeiro.');return}
-  p.villages=parseOverviewText(p.overviewText).map(v=>({...v,owner:p.name}));
-  renderPlayers();aggregateAllies();
-}
-function parseAllPlayers(){
-  let total=0,count=0;
-  players.forEach(p=>{
-    if(p.overviewText&&p.overviewText.trim()){
-      p.villages=parseOverviewText(p.overviewText).map(v=>({...v,owner:p.name}));
-      total+=p.villages.length;count++;
-    }
+/* ===== Snippet UI ===== */
+function showSnippet(){ $('snippetText').textContent = SNIPPET; }
+function copySnippet(){
+  navigator.clipboard.writeText(SNIPPET).then(()=>{
+    alert('✅ Snippet copiado!\n\n1. Abre o KingsAge\n2. F12 → Console\n3. Cola (Ctrl+V) + Enter\n4. Aparece uma janela — Ctrl+A, Ctrl+C\n5. Volta aqui e cola no campo Overview');
+  }).catch(()=>{
+    // Fallback: selecionar o texto
+    const el = $('snippetText');
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    alert('⚠ Copia manualmente com Ctrl+C (o texto está selecionado).');
   });
-  renderPlayers();aggregateAllies();
-  if(total===0)$('overviewStatus').innerHTML='<span class="bad">Nenhuma aldeia detectada.</span>';
-  else $('overviewStatus').innerHTML=`✓ ${total} aldeias de ${count} jogadores`;
 }
-function aggregateAllies(){
-  alliesList=[];
-  players.forEach(p=>p.villages.forEach(v=>alliesList.push({...v,owner:p.name})));
-  const seen={};
-  alliesList=alliesList.filter(v=>{if(seen[v.key])return false;seen[v.key]=true;return true});
+function showSnippetInfo(){
+  alert('📋 Como funciona:\n\n1. O snippet lê a tabela da overview do KingsAge\n2. Extrai coordenadas (do title) e tropas (das células)\n3. Mostra uma janela no jogo com o JSON\n4. Copias e colas na dashboard\n\nNão guarda nada, não envia nada para servidores externos.');
 }
 
+/* ===== Parse JSON ===== */
+function parseOverviewJSON(){
+  const text = $('overviewInput').value.trim();
+  if(!text){
+    $('overviewStatus').innerHTML = '<span class="bad">Cola o JSON primeiro.</span>';
+    return;
+  }
+  
+  let data;
+  try{
+    data = JSON.parse(text);
+  }catch(e){
+    $('overviewStatus').innerHTML = '<span class="bad">❌ JSON inválido. Verifica se colaste o resultado completo.</span>';
+    return;
+  }
+  
+  if(!Array.isArray(data)){
+    $('overviewStatus').innerHTML = '<span class="bad">❌ Esperava um array JSON.</span>';
+    return;
+  }
+  
+  const owner = $('allyPlayer').value.trim() || ('Jogador ' + (players.length + 1));
+  
+  const villages = data.map(v => {
+    const t = v.troops || {};
+    const troops = {
+      farmer: t.farmer||0, templar: t.templar||0, squire: t.squire||0,
+      warrior: t.warrior||0, archer: t.archer||0, spy: t.spy||0,
+      crusader: t.crusader||0, blackknight: t.blackknight||0,
+      ram: t.ram||0, catapult: t.catapult||0, snob: t.snob||0
+    };
+    return {
+      key: v.x + '|' + v.y,
+      x: v.x, y: v.y,
+      name: v.name || (v.x + '|' + v.y),
+      owner: owner,
+      troops: troops,
+      offPower: calcOffPower(troops)
+    };
+  }).filter(v => v.x > 0 && v.y > 0);
+  
+  // Verificar se o jogador já existe
+  const existing = players.findIndex(p => p.name === owner);
+  if(existing >= 0){
+    players[existing].villages = villages;
+  } else {
+    players.push({ name: owner, villages: villages });
+  }
+  
+  // Agregar todos
+  aggregateAllies();
+  
+  $('overviewStatus').innerHTML = `<span class="ok">✓ ${villages.length} aldeias processadas para <b>${owner}</b></span>`;
+  $('overviewInput').value = '';
+  $('allyPlayer').value = '';
+  
+  renderPlayers();
+  updatePlayersSection();
+}
+
+function aggregateAllies(){
+  alliesList = [];
+  players.forEach(p => {
+    p.villages.forEach(v => alliesList.push(v));
+  });
+  $('srvLabel').textContent = $('worldSpeed').value + 'x';
+}
+
+function updatePlayersSection(){
+  $('playersSection').style.display = players.length ? 'block' : 'none';
+}
+
+/* ===== Players UI ===== */
+function addPlayer(){
+  const name = prompt('Nome do jogador:');
+  if(!name) return;
+  if(players.find(p => p.name === name)){
+    alert('Já existe um jogador com esse nome.');
+    return;
+  }
+  players.push({ name: name, villages: [] });
+  renderPlayers();
+  updatePlayersSection();
+}
+
+function removePlayer(name){
+  if(!confirm('Remover o jogador ' + name + ' e todas as suas aldeias?')) return;
+  players = players.filter(p => p.name !== name);
+  aggregateAllies();
+  renderPlayers();
+  updatePlayersSection();
+}
+
+function clearAllPlayers(){
+  if(!confirm('Remover TODOS os jogadores e aldeias?')) return;
+  players = [];
+  alliesList = [];
+  renderPlayers();
+  updatePlayersSection();
+}
+
+function renderPlayers(){
+  const el = $('playersList');
+  if(!players.length){
+    el.innerHTML = '<p class="small">Sem jogadores processados. Cola uma overview acima.</p>';
+    return;
+  }
+  
+  let html = '';
+  players.forEach(p => {
+    // Calcular totais por tropa
+    const totals = {};
+    TROOP_ORDER.forEach(k => totals[k] = 0);
+    p.villages.forEach(v => {
+      TROOP_ORDER.forEach(k => totals[k] += (v.troops[k] || 0));
+    });
+    const totalOff = p.villages.filter(v => v.offPower >= (+$('minOffPower').value || 5000)).length;
+    const totalSnob = p.villages.filter(v => v.troops.snob > 0).length;
+    
+    html += `<div class="player-block">
+      <div class="ph-header">
+        <b>${p.name}</b>
+        <span class="small">${p.villages.length} aldeias · ${totalOff} OFF · ${totalSnob} c/ conde</span>
+        <button class="danger small" onclick="removePlayer('${p.name.replace(/'/g,"\\'")}')">X</button>
+      </div>
+      <div class="troop-summary">
+        ${TROOP_ORDER.filter(k => totals[k] > 0).map(k => `
+          <div class="troop-stat" title="${TROOP_LABELS[k]}: ${fmtNum(totals[k])}">
+            <div class="icon">${TROOP_ICONS[k]}</div>
+            <div class="v">${fmtNum(totals[k])}</div>
+            <div class="l">${TROOP_LABELS[k]}</div>
+          </div>
+        `).join('')}
+      </div>
+      <table class="borderlist" style="margin-top:8px">
+        <thead><tr>
+          <th>Coordenada</th>
+          <th>Nome</th>
+          ${TROOP_ORDER.map(k => `<th style="text-align:center" title="${TROOP_LABELS[k]}">${TROOP_ICONS[k]}</th>`).join('')}
+          <th>Poder Of.</th>
+          <th>Tipo</th>
+        </tr></thead>
+        <tbody>
+          ${p.villages.map(v => {
+            const minOff = +$('minOffPower').value || 5000;
+            const hasOff = v.offPower >= minOff;
+            const hasSnob = v.troops.snob > 0;
+            const hasFake = !hasOff && (v.troops.ram > 0 || v.troops.spy > 0);
+            const type = hasOff ? '<span class="pill off">OFF</span>' :
+                         hasFake ? '<span class="pill fake">FAKE</span>' :
+                         hasSnob ? '<span class="pill snob">CONDE</span>' :
+                         '<span class="pill def">DEF</span>';
+            return `<tr>
+              <td><b>${v.key}</b></td>
+              <td class="small">${v.name.substring(0,25)}</td>
+              ${TROOP_ORDER.map(k => {
+                const val = v.troops[k] || 0;
+                return `<td style="text-align:right;${val===0?'color:#bbb':''}">${val===0?'—':fmtNum(val)}</td>`;
+              }).join('')}
+              <td style="text-align:right"><b>${fmtNum(v.offPower)}</b></td>
+              <td>${type}</td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+        <tfoot>
+          <tr style="background:#E1D7BC;font-weight:bold">
+            <td colspan="2">TOTAL</td>
+            ${TROOP_ORDER.map(k => `<td style="text-align:right;color:#840000">${totals[k]>0?fmtNum(totals[k]):'—'}</td>`).join('')}
+            <td></td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>`;
+  });
+  
+  el.innerHTML = html;
+}
+
+/* ===== Fases ===== */
 function addPhase(){phases.push({id:'ph'+Date.now()+Math.random(),name:'Fase '+(phases.length+1),time:'12:00:00',type:'fake',targetsText:''});renderPhases()}
 function addFakePhase(){phases.push({id:'ph'+Date.now()+Math.random(),name:'Operação Fake',time:'09:00:00',type:'fake',targetsText:$('targetsInput').value});renderPhases()}
 function addRealPhase(){phases.push({id:'ph'+Date.now()+Math.random(),name:'Operação Real',time:'13:10:00',type:'real',targetsText:$('targetsInput').value});renderPhases()}
@@ -430,123 +525,33 @@ function removePhase(id){phases=phases.filter(p=>p.id!==id);renderPhases()}
 function updatePhase(id,f,v){const p=phases.find(x=>x.id===id);if(p)p[f]=v}
 function renderPhases(){
   const el=$('phasesList');
-  if(!phases.length){el.innerHTML='<p class="small">Sem fases. Adiciona uma ou usa os botões rápidos.</p>';return}
-  el.innerHTML=phases.map(p=>`
-    <div class="phase-card">
-      <div class="ph-header">
-        <input value="${p.name}" onchange="updatePhase('${p.id}','name',this.value)" style="width:150px;font-weight:bold" title="Nome da fase">
-        <button class="danger small" onclick="removePhase('${p.id}')" title="Remover fase">X</button>
-      </div>
-      <div class="row3">
-        <div>
-          <label>Hora de embate <span class="tip" data-tip="Hora a que os ataques devem chegar ao alvo. A tool calcula automaticamente a hora de lançamento.">?</span></label>
-          <input type="time" step="1" value="${p.time}" onchange="updatePhase('${p.id}','time',this.value)">
-        </div>
-        <div>
-          <label>Tipo <span class="tip" data-tip="Tipo de missão desta fase: Fake (ruído), Conde falso (confunde), Fake espião (reconhecimento), Real (OFF + conde + anti-snipe).">?</span></label>
-          <select onchange="updatePhase('${p.id}','type',this.value)">
-            <option value="fake" ${p.type==='fake'?'selected':''}>Fake (89 milícias + 1 aríete)</option>
-            <option value="fakeSnob" ${p.type==='fakeSnob'?'selected':''}>Conde falso</option>
-            <option value="fakeSpy" ${p.type==='fakeSpy'?'selected':''}>Fake espião (5 espiões)</option>
-            <option value="fakeSpyRam" ${p.type==='fakeSpyRam'?'selected':''}>Fake espião+aríete</option>
-            <option value="fakeAxeRam" ${p.type==='fakeAxeRam'?'selected':''}>Fake guerreiro+aríete</option>
-            <option value="real" ${p.type==='real'?'selected':''}>Real (OFF + conde + anti-snipe)</option>
-          </select>
-        </div>
-        <div>
-          <label>&nbsp;</label>
-          <button class="small sec" onclick="updatePhase('${p.id}','targetsText',document.getElementById('targetsInput').value)" title="Copia os alvos globais para esta fase">Usar alvos globais</button>
-        </div>
-      </div>
-      <label>Alvos desta fase <span class="tip" data-tip="Coordenadas específicas para esta fase. Permite que fases diferentes ataquem alvos diferentes.">?</span></label>
-      <textarea style="height:50px" onchange="updatePhase('${p.id}','targetsText',this.value)" placeholder="537|519&#10;533|512"></textarea>
-    </div>
-  `).join('');
+  if(!phases.length){el.innerHTML='<p class="small">Sem fases.</p>';return}
+  el.innerHTML=phases.map(p=>`<div class="phase-card"><div class="ph-header"><input value="${p.name}" onchange="updatePhase('${p.id}','name',this.value)" style="width:150px;font-weight:bold"><button class="danger small" onclick="removePhase('${p.id}')">X</button></div><div class="row3"><div><label>Hora</label><input type="time" step="1" value="${p.time}" onchange="updatePhase('${p.id}','time',this.value)"></div><div><label>Tipo</label><select onchange="updatePhase('${p.id}','type',this.value)"><option value="fake" ${p.type==='fake'?'selected':''}>Fake</option><option value="fakeSnob" ${p.type==='fakeSnob'?'selected':''}>Conde falso</option><option value="fakeSpy" ${p.type==='fakeSpy'?'selected':''}>Fake espião</option><option value="fakeSpyRam" ${p.type==='fakeSpyRam'?'selected':''}>Fake espião+aríete</option><option value="fakeAxeRam" ${p.type==='fakeAxeRam'?'selected':''}>Fake guerreiro+aríete</option><option value="real" ${p.type==='real'?'selected':''}>Real</option></select></div><div><label>&nbsp;</label><button class="small sec" onclick="updatePhase('${p.id}','targetsText',document.getElementById('targetsInput').value)">Usar alvos</button></div></div><label>Alvos</label><textarea style="height:50px" onchange="updatePhase('${p.id}','targetsText',this.value)">${p.targetsText||''}</textarea></div>`).join('');
 }
 
+/* ===== Tratado ===== */
 function getTreaty(){return{name:$('treatyType').selectedOptions[0].text,protect:+$('treatyProtect').value||3,block:+$('treatyBlock').value||9}}
-function treatyWindow(attackSec){
-  const t=getTreaty();const margin=10;
-  const signed=attackSec-margin*60;
-  return{t,signed,protectEnd:signed+t.protect*3600,blockEnd:signed+t.protect*3600+t.block*3600,attack:attackSec};
-}
-function renderTimeline(w){
-  const start=w.attack-2*3600,end=w.blockEnd+2*3600,span=end-start;
-  const pct=v=>((v-start)/span*100).toFixed(2)+'%';
-  const pW=((w.protectEnd-w.signed)/span*100).toFixed(2);
-  const bW=((w.blockEnd-w.protectEnd)/span*100).toFixed(2);
-  const fW=(100-parseFloat(pW)-parseFloat(bW)).toFixed(2);
-  return`<div class="timeline">
-    <div class="tl-bar tl-protect" style="left:${pct(w.signed)};width:${pW}%"></div>
-    <div class="tl-bar tl-block" style="left:${pct(w.protectEnd)};width:${bW}%"></div>
-    <div class="tl-bar tl-free" style="left:${pct(w.blockEnd)};width:${fW}%"></div>
-    <div class="tl-marker" style="left:${pct(w.attack)}"></div>
-    <div class="tl-label" style="left:${pct(w.signed)};top:2px">Assina ${fmt(w.signed)}</div>
-    <div class="tl-label" style="left:${pct(w.protectEnd)};top:2px">Fim proteção ${fmt(w.protectEnd)}</div>
-    <div class="tl-label" style="left:${pct(w.blockEnd)};top:2px">Fim bloqueio ${fmt(w.blockEnd)}</div>
-  </div>
-  <div class="tl-legend">
-    <span><i class="tl-dot" style="background:#a8d8a0"></i> Proteção (${w.t.protect}h) — ataques cancelados</span>
-    <span><i class="tl-dot" style="background:#e8d8a0"></i> Bloqueio (${w.t.block}h) — inimigo indefeso</span>
-    <span><i class="tl-dot" style="background:#e8a8a0"></i> Ataque livre</span>
-  </div>`;
-}
+function treatyWindow(attackSec){const t=getTreaty();const margin=10;const signed=attackSec-margin*60;return{t,signed,protectEnd:signed+t.protect*3600,blockEnd:signed+t.protect*3600+t.block*3600,attack:attackSec}}
+function renderTimeline(w){const start=w.attack-2*3600,end=w.blockEnd+2*3600,span=end-start;const pct=v=>((v-start)/span*100).toFixed(2)+'%';const pW=((w.protectEnd-w.signed)/span*100).toFixed(2);const bW=((w.blockEnd-w.protectEnd)/span*100).toFixed(2);const fW=(100-parseFloat(pW)-parseFloat(bW)).toFixed(2);return`<div class="timeline"><div class="tl-bar tl-protect" style="left:${pct(w.signed)};width:${pW}%"></div><div class="tl-bar tl-block" style="left:${pct(w.protectEnd)};width:${bW}%"></div><div class="tl-bar tl-free" style="left:${pct(w.blockEnd)};width:${fW}%"></div><div class="tl-marker" style="left:${pct(w.attack)}"></div><div class="tl-label" style="left:${pct(w.signed)};top:2px">Assina ${fmt(w.signed)}</div><div class="tl-label" style="left:${pct(w.protectEnd)};top:2px">Fim proteção ${fmt(w.protectEnd)}</div><div class="tl-label" style="left:${pct(w.blockEnd)};top:2px">Fim bloqueio ${fmt(w.blockEnd)}</div></div><div class="tl-legend"><span><i class="tl-dot" style="background:#a8d8a0"></i> Proteção (${w.t.protect}h)</span><span><i class="tl-dot" style="background:#e8d8a0"></i> Bloqueio (${w.t.block}h)</span><span><i class="tl-dot" style="background:#e8a8a0"></i> Ataque livre</span></div>`}
 
-function calculateAntiSnipe(attackTime,targetCoord,enemyVillages,world,myOff,minOff){
-  const A=secs(attackTime);
-  const results=[];
-  enemyVillages.forEach(enemy=>{
-    const dToTarget=dist(enemy,targetCoord);
-    const travel=dToTarget*(11/world)*60;
-    const maxLaunchSnipe=A-travel;
-    const myAttackArrival=maxLaunchSnipe-1;
-    const myCandidates=myOff.filter(v=>v.offPower>=minOff).map(v=>{
-      const d=dist(v,enemy);const t=travelTime(v,enemy,'warrior',world);
-      return{v,d,travel:t,launch:myAttackArrival-t,canReach:(myAttackArrival-t)>0};
-    }).filter(c=>c.canReach).sort((a,b)=>a.launch-b.launch);
-    results.push({enemy,dToTarget,travel,maxLaunchSnipe,myAttackArrival,myCandidates,canCounter:myCandidates.length>0});
-  });
-  return results.sort((a,b)=>a.dToTarget-b.dToTarget);
-}
+/* ===== Anti-snipe ===== */
+function calculateAntiSnipe(attackTime,targetCoord,enemyVillages,world,myOff,minOff){const A=secs(attackTime),results=[];enemyVillages.forEach(enemy=>{const dToTarget=dist(enemy,targetCoord);const travel=dToTarget*(11/world)*60;const maxLaunchSnipe=A-travel;const myAttackArrival=maxLaunchSnipe-1;const myCandidates=myOff.filter(v=>v.offPower>=minOff).map(v=>{const d=dist(v,enemy);const t=travelTime(v,enemy,'warrior',world);return{v,d,travel:t,launch:myAttackArrival-t,canReach:(myAttackArrival-t)>0}}).filter(c=>c.canReach).sort((a,b)=>a.launch-b.launch);results.push({enemy,dToTarget,travel,maxLaunchSnipe,myAttackArrival,myCandidates,canCounter:myCandidates.length>0})});return results.sort((a,b)=>a.dToTarget-b.dToTarget)}
 
-function renderTroopSummary(){
-  const totals={farmer:0,templar:0,squire:0,warrior:0,archer:0,spy:0,crusader:0,blackknight:0,ram:0,catapult:0,snob:0};
-  alliesList.forEach(v=>{for(const k in totals)totals[k]+=(v.troops[k]||0)});
-  const labels={farmer:'Milícias',templar:'Templários',squire:'Escudeiros',warrior:'Guerreiros',archer:'Arqueiros',spy:'Espiões',crusader:'Cruzados',blackknight:'Cav. Negros',ram:'Aríetes',catapult:'Catapultas',snob:'Condes'};
-  const icons={farmer:'🛡',templar:'⚔',squire:'🗡',warrior:'⚔',archer:'🏹',spy:'👁',crusader:'🐎',blackknight:'🐴',ram:'🔨',catapult:'⚙',snob:'👑'};
-  let html='<div class="troop-summary">';
-  for(const k in totals){
-    if(totals[k]===0)continue;
-    html+=`<div class="troop-stat" title="${labels[k]}: ${totals[k].toLocaleString()}">
-      <div class="icon">${icons[k]}</div>
-      <div class="v">${totals[k].toLocaleString()}</div>
-      <div class="l">${labels[k]}</div>
-    </div>`;
-  }
-  html+='</div>';
-  return html;
-}
-
+/* ===== Operação ===== */
 function generateOperation(){
   if(!alliesList.length){$('output').innerHTML='<div class="alert bad">Processa as overviews primeiro.</div>';return}
   if(!phases.length){$('output').innerHTML='<div class="alert bad">Adiciona fases.</div>';return}
   
-  const world=+$('worldSpeed').value||1;
-  const minOff=+$('minOffPower').value||5000;
-  const snobEscort=+$('snobEscort').value||100;
-  const fakesPerVillage=+$('fakesPerVillage').value||50;
+  const world=+$('worldSpeed').value||1,minOff=+$('minOffPower').value||5000,snobEscort=+$('snobEscort').value||100,fakesPerVillage=+$('fakesPerVillage').value||50;
   const enemyVillages=parseCoords($('enemies').value);
-  
   const offVillages=alliesList.filter(v=>v.offPower>=minOff);
   const fakeVillages=alliesList.filter(v=>v.offPower<minOff&&(v.troops.ram>0||v.troops.spy>0));
   const snobVillages=alliesList.filter(v=>v.troops.snob>0);
   
-  const allMissions=[];
-  const allAntiSnipe=[];
+  const allMissions=[],allAntiSnipe=[];
   
   phases.forEach(phase=>{
-    const attack=secs(phase.time);
-    const targetsInPhase=parseCoords(phase.targetsText);
+    const attack=secs(phase.time),targetsInPhase=parseCoords(phase.targetsText);
     if(!targetsInPhase.length)return;
     
     if(phase.type==='real'){
@@ -560,7 +565,6 @@ function generateOperation(){
         if(snobCand.length){
           const s=snobCand[0];
           allMissions.push({phase:phase.name,type:'Conde real',from:s.v.key,to:tgt.key,fromOwner:s.v.owner,travel:s.travel,launch:attack-s.travel,arrival:attack,troops:`1 conde + ${snobEscort} escolta`,isFake:false});
-          
           if(enemyVillages.length){
             const as=calculateAntiSnipe(phase.time,tgt,enemyVillages,world,offVillages,minOff);
             allAntiSnipe.push({targetKey:tgt.key,results:as,phase:phase.name});
@@ -598,25 +602,68 @@ function generateOperation(){
   
   let html='';
   
+  // Sumário geral
   html+=`<div class="summary">
-    <div class="stat" title="Número de jogadores aliados"><div class="v">${players.length}</div><div class="l">Jogadores</div></div>
-    <div class="stat" title="Total de aldeias processadas"><div class="v">${alliesList.length}</div><div class="l">Aldeias</div></div>
-    <div class="stat ok" title="Aldeias com poder ofensivo suficiente para enviar uma OFF completa"><div class="v">${offVillages.length}</div><div class="l">Aldeias OFF</div></div>
-    <div class="stat" title="Aldeias sem OFF mas com aríete ou espiões — usadas só para fakes"><div class="v">${fakeVillages.length}</div><div class="l">Aldeias Fake</div></div>
-    <div class="stat warn" title="Aldeias com pelo menos 1 conde disponível"><div class="v">${snobVillages.length}</div><div class="l">Aldeias c/ Conde</div></div>
+    <div class="stat"><div class="v">${players.length}</div><div class="l">Jogadores</div></div>
+    <div class="stat"><div class="v">${alliesList.length}</div><div class="l">Aldeias</div></div>
+    <div class="stat ok"><div class="v">${offVillages.length}</div><div class="l">Aldeias OFF</div></div>
+    <div class="stat"><div class="v">${fakeVillages.length}</div><div class="l">Aldeias Fake</div></div>
+    <div class="stat warn"><div class="v">${snobVillages.length}</div><div class="l">Aldeias c/ Conde</div></div>
   </div>`;
   
-  html+=`<div class="phase"><h4>📦 Resumo Geral de Tropas
-    <span class="tip" data-tip="Total de todas as tropas disponíveis em todas as aldeias dos jogadores aliados.">?</span>
-  </h4>${renderTroopSummary()}</div>`;
+  // Resumo de tropas POR JOGADOR
+  html+=`<div class="phase"><h4>📦 Resumo de Tropas por Jogador</h4>`;
+  players.forEach(p => {
+    const totals = {};
+    TROOP_ORDER.forEach(k => totals[k] = 0);
+    p.villages.forEach(v => {
+      TROOP_ORDER.forEach(k => totals[k] += (v.troops[k] || 0));
+    });
+    const totalOff = p.villages.filter(v => v.offPower >= minOff).length;
+    const totalSnob = p.villages.filter(v => v.troops.snob > 0).length;
+    
+    html += `<div class="player-block">
+      <div class="ph-header">
+        <b>${p.name}</b>
+        <span class="small">${p.villages.length} aldeias · ${totalOff} OFF · ${totalSnob} c/ conde</span>
+      </div>
+      <div class="troop-summary">
+        ${TROOP_ORDER.filter(k => totals[k] > 0).map(k => `
+          <div class="troop-stat" title="${TROOP_LABELS[k]}: ${fmtNum(totals[k])}">
+            <div class="icon">${TROOP_ICONS[k]}</div>
+            <div class="v">${fmtNum(totals[k])}</div>
+            <div class="l">${TROOP_LABELS[k]}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
+  });
+  html+=`</div>`;
   
-  html+=`<div class="phase"><h4>⚔ Tropas Usadas na Operação
-    <span class="tip" data-tip="Comparação entre o que foi usado na operação e o que estava disponível. Ajuda a perceber se sobra capacidade para mais ataques.">?</span>
-  </h4>
+  // Resumo global
+  const globalTotals = {};
+  TROOP_ORDER.forEach(k => globalTotals[k] = 0);
+  alliesList.forEach(v => {
+    TROOP_ORDER.forEach(k => globalTotals[k] += (v.troops[k] || 0));
+  });
+  html+=`<div class="phase"><h4>🌍 Resumo Global de Tropas (todas as aldeias)</h4>
+    <div class="troop-summary">
+      ${TROOP_ORDER.filter(k => globalTotals[k] > 0).map(k => `
+        <div class="troop-stat" title="${TROOP_LABELS[k]}: ${fmtNum(globalTotals[k])}">
+          <div class="icon">${TROOP_ICONS[k]}</div>
+          <div class="v">${fmtNum(globalTotals[k])}</div>
+          <div class="l">${TROOP_LABELS[k]}</div>
+        </div>
+      `).join('')}
+    </div>
+  </div>`;
+  
+  // Tropas usadas
+  html+=`<div class="phase"><h4>⚔ Tropas Usadas na Operação</h4>
     <table class="borderlist">
       <thead><tr><th>Recurso</th><th>Usado</th><th>Disponível</th><th>%</th></tr></thead>
       <tbody>
-        <tr><td>OFFs (aldeias com poder ≥ ${minOff})</td><td><b>${offCount}</b></td><td>${offVillages.length}</td><td>${offVillages.length?(offCount/offVillages.length*100).toFixed(0):0}%</td></tr>
+        <tr><td>OFFs (aldeias com poder ≥ ${fmtNum(minOff)})</td><td><b>${offCount}</b></td><td>${offVillages.length}</td><td>${offVillages.length?(offCount/offVillages.length*100).toFixed(0):0}%</td></tr>
         <tr><td>Condes (ataques de conquista)</td><td><b>${snobCount}</b></td><td>${snobVillages.length}</td><td>${snobVillages.length?(snobCount/snobVillages.length*100).toFixed(0):0}%</td></tr>
         <tr><td>Fakes programados</td><td><b>${fakeMissions.length}</b></td><td>—</td><td>—</td></tr>
         <tr><td>Anti-snipes programados</td><td><b>${antiSnipeCount}</b></td><td>${antiSnipeTotal}</td><td>${antiSnipeTotal?(antiSnipeCount/antiSnipeTotal*100).toFixed(0):0}%</td></tr>
@@ -624,97 +671,55 @@ function generateOperation(){
     </table>
   </div>`;
   
+  // Métricas
   html+=`<div class="phase"><h4>📈 Métricas da Operação</h4>
     <div class="summary">
-      <div class="stat ok" title="Total de ataques fakes"><div class="v">${fakeMissions.length}</div><div class="l">Fakes</div></div>
-      <div class="stat bad" title="Total de ataques com OFF completa"><div class="v">${offCount}</div><div class="l">OFFs</div></div>
-      <div class="stat warn" title="Total de ataques de conquista"><div class="v">${snobCount}</div><div class="l">Condes</div></div>
-      <div class="stat" title="Total de ataques anti-snipe"><div class="v">${antiSnipeCount}</div><div class="l">Anti-Snipes</div></div>
-      <div class="stat" title="Snipes inimigos evitados / total"><div class="v">${antiSnipeVillages}/${antiSnipeTotal}</div><div class="l">Snipes evitados</div></div>
+      <div class="stat ok"><div class="v">${fakeMissions.length}</div><div class="l">Fakes</div></div>
+      <div class="stat bad"><div class="v">${offCount}</div><div class="l">OFFs</div></div>
+      <div class="stat warn"><div class="v">${snobCount}</div><div class="l">Condes</div></div>
+      <div class="stat"><div class="v">${antiSnipeCount}</div><div class="l">Anti-Snipes</div></div>
+      <div class="stat"><div class="v">${antiSnipeVillages}/${antiSnipeTotal}</div><div class="l">Snipes evitados</div></div>
     </div>
   </div>`;
   
   if(antiSnipeCount>0)
-    html+=`<div class="alert ok">🛡 <b>${antiSnipeCount}</b> anti-snipes programados — <b>${antiSnipeVillages}</b> defesas inimigas bloqueadas 1s antes de saírem.</div>`;
+    html+=`<div class="alert ok">🛡 <b>${antiSnipeCount}</b> anti-snipes programados — <b>${antiSnipeVillages}</b> defesas bloqueadas 1s antes.</div>`;
   
+  // Anti-snipe
   allAntiSnipe.forEach(a=>{
     const cov=a.results.filter(r=>r.canCounter).length;
-    html+=`<div class="phase"><h4>🎯 Anti-Snipe — ${a.targetKey}
-      <span class="tip" data-tip="Análise das aldeias inimigas que podem enviar cavaleiros negros para defender os teus condes. Calculamos a hora máxima de envio do snipe e atacamos 1s antes.">?</span>
-    </h4>
-      <div class="alert ${cov===a.results.length?'ok':(cov>0?'warn':'bad')}">
-        <b>${cov}/${a.results.length}</b> aldeias bloqueáveis ${cov===a.results.length?'✓ todas controladas':'⚠ algumas sem cobertura'}
-      </div>
-      <table class="borderlist">
-        <thead><tr>
-          <th title="Aldeia inimiga">Inimigo</th>
-          <th title="Distância em campos ao alvo">Dist.</th>
-          <th title="Tempo de viagem dos cavaleiros negros">Viagem CN</th>
-          <th title="Hora máxima a que o inimigo pode enviar o snipe para chegar antes do conde">Snipe máx.</th>
-          <th title="Hora a que a tua OFF deve chegar à aldeia inimiga (1s antes do snipe)">Tua OFF</th>
-          <th>Estado</th>
-        </tr></thead>
-        <tbody>`;
+    html+=`<div class="phase"><h4>🎯 Anti-Snipe — ${a.targetKey}</h4>
+      <div class="alert ${cov===a.results.length?'ok':(cov>0?'warn':'bad')}"><b>${cov}/${a.results.length}</b> aldeias bloqueáveis</div>
+      <table class="borderlist"><thead><tr><th>Inimigo</th><th>Dist.</th><th>Viagem CN</th><th>Snipe máx.</th><th>Tua OFF</th><th>Estado</th></tr></thead><tbody>`;
     a.results.forEach(r=>{
-      html+=`<tr>
-        <td><b>${r.enemy.key}</b></td>
-        <td>${r.dToTarget.toFixed(1)}</td>
-        <td>${fmtDur(r.travel)}</td>
-        <td><span class="snipe-time">${fmt(r.maxLaunchSnipe)}</span></td>
-        <td><span class="snipe-time">${fmt(r.myAttackArrival)}</span></td>
-        <td>${r.canCounter?'<span class="ok">✓ '+r.myCandidates.length+' OFF</span>':'<span class="bad">✗ sem OFF</span>'}</td>
-      </tr>`;
+      html+=`<tr><td><b>${r.enemy.key}</b></td><td>${r.dToTarget.toFixed(1)}</td><td>${fmtDur(r.travel)}</td><td><span class="snipe-time">${fmt(r.maxLaunchSnipe)}</span></td><td><span class="snipe-time">${fmt(r.myAttackArrival)}</span></td><td>${r.canCounter?'<span class="ok">✓ '+r.myCandidates.length+' OFF</span>':'<span class="bad">✗ sem OFF</span>'}</td></tr>`;
     });
     html+='</tbody></table></div>';
   });
   
+  // Fases
   html+=`<div class="phase"><h4>📅 Fases</h4>`;
   phases.forEach(ph=>{
-    const w=treatyWindow(secs(ph.time));
-    const ms=allMissions.filter(m=>m.phase===ph.name);
-    const f=ms.filter(m=>m.isFake).length;
-    const r=ms.filter(m=>!m.isFake).length;
-    html+=`<div class="phase-card">
-      <div class="ph-header"><b>${ph.name}</b><span class="pill">${ph.time}</span><span class="small">${f} fakes · ${r} reais</span></div>
-      ${renderTimeline(w)}
-    </div>`;
+    const w=treatyWindow(secs(ph.time)),ms=allMissions.filter(m=>m.phase===ph.name),f=ms.filter(m=>m.isFake).length,r=ms.filter(m=>!m.isFake).length;
+    html+=`<div class="phase-card"><div class="ph-header"><b>${ph.name}</b><span class="pill">${ph.time}</span><span class="small">${f} fakes · ${r} reais</span></div>${renderTimeline(w)}</div>`;
   });
   html+='</div>';
   
+  // Lista cronológica
   allMissions.sort((a,b)=>a.launch-b.launch);
-  html+=`<div class="phase"><h4>🕐 Lista Cronológica
-    <span class="tip" data-tip="Todas as missões ordenadas por hora de lançamento. É a ordem exata por que deves lançar os ataques no jogo.">?</span>
-  </h4>
-    <div style="max-height:350px;overflow-y:auto">
-    <table class="borderlist">
-      <thead><tr><th>Hora</th><th>Fase</th><th>Tipo</th><th>Jogador</th><th>Origem</th><th>→ Alvo</th><th>Tropas</th></tr></thead>
-      <tbody>`;
+  html+=`<div class="phase"><h4>🕐 Lista Cronológica</h4><div style="max-height:350px;overflow-y:auto"><table class="borderlist"><thead><tr><th>Hora</th><th>Fase</th><th>Tipo</th><th>Jogador</th><th>Origem</th><th>→ Alvo</th><th>Tropas</th></tr></thead><tbody>`;
   allMissions.slice(0,300).forEach(m=>{
-    const tipo = m.isFake ? '<span class="pill fake">'+m.type+'</span>' : 
-      (m.type==='Conde real' ? '<span class="pill snob">Conde real</span>' : 
-       (m.type==='Anti-snipe' ? '<span class="pill off">Anti-snipe</span>' : '<span class="pill off">OFF</span>'));
-    html+=`<tr>
-      <td><b>${fmt(m.launch)}</b></td>
-      <td class="small">${m.phase}</td>
-      <td>${tipo}</td>
-      <td class="small">${m.fromOwner||''}</td>
-      <td>${m.from}</td>
-      <td>${m.to}</td>
-      <td class="small">${m.troops}</td>
-    </tr>`;
+    const tipo=m.isFake?'<span class="pill fake">'+m.type+'</span>':(m.type==='Conde real'?'<span class="pill snob">Conde real</span>':(m.type==='Anti-snipe'?'<span class="pill off">Anti-snipe</span>':'<span class="pill off">OFF</span>'));
+    html+=`<tr><td><b>${fmt(m.launch)}</b></td><td class="small">${m.phase}</td><td>${tipo}</td><td class="small">${m.fromOwner||''}</td><td>${m.from}</td><td>${m.to}</td><td class="small">${m.troops}</td></tr>`;
   });
   html+='</tbody></table></div></div>';
   
+  // Exportar
   html+=`<div class="phase"><h4>📤 Exportar</h4>
     <div class="row">
-      <button class="green" onclick="copyBBCode()" title="Gera o plano completo em BB-Code pronto para colar numa mensagem do KingsAge">
-        📨 Gerar BB-Code para KingsAge
-      </button>
-      <button onclick="copyExport()" title="Copia o formato simples para fórum externo">
-        📋 Copiar formato simples
-      </button>
+      <button class="green" onclick="copyBBCode()">📨 Gerar BB-Code para KingsAge</button>
+      <button onclick="copyExport()">📋 Copiar formato simples</button>
     </div>
-    <p class="small" style="margin-top:6px">O BB-Code inclui coordenadas clicáveis [village], ícones de tropas [img_axe], cores e formatação do KingsAge.</p>
     <div class="export-box" id="exportBox" style="margin-top:8px">${generateExportFormat(allMissions)}</div>
   </div>`;
   
@@ -722,173 +727,65 @@ function generateOperation(){
   $('output').innerHTML=html;
 }
 
-/* ============================================================
-   BB-CODE PARA O KINGSAGE
-   ============================================================ */
+/* ===== BB-Code ===== */
 function generateBBCode(){
-  const p=window._lastPlan;
-  if(!p)return null;
-  
-  const world=+$('worldSpeed').value;
-  const t=getTreaty();
-  
+  const p=window._lastPlan;if(!p)return null;
+  const world=+$('worldSpeed').value,t=getTreaty();
   let bb='';
-  
-  // Cabeçalho
   bb+=`[b][size=16][color=#840000]⚔ OPERAÇÃO MILITAR[/color][/size][/b]\n\n`;
-  bb+=`[b]Servidor:[/b] ${world}x · `;
-  bb+=`[b]Tratado:[/b] ${t.name} ([color=green]${t.protect}h[/color] proteção · [color=orange]${t.block}h[/color] bloqueio)\n`;
-  bb+=`[b]Fases:[/b] ${p.phases.length} · `;
-  bb+=`[b]Aldeias:[/b] ${p.alliesList.length} · `;
-  bb+=`[b]Jogadores:[/b] ${p.players.length}\n\n`;
-  
-  bb+=`[hr]\n\n`;
-  
-  // Resumo de forças
-  bb+=`[b][size=14][color=#840000]📦 Forças Disponíveis[/color][/size][/b]\n`;
-  bb+=`[img_axe] [b]Aldeias com OFF:[/b] ${p.offVillages.length}\n`;
-  bb+=`[img_snob] [b]Aldeias com Conde:[/b] ${p.snobVillages.length}\n`;
-  bb+=`[img_spy] [b]Aldeias Fake:[/b] ${p.fakeVillages.length}\n\n`;
-  
-  // Métricas
-  bb+=`[b][size=14][color=#840000]📈 Métricas da Operação[/color][/size][/b]\n`;
-  bb+=`[img_axe] [b]${p.allMissions.filter(m=>!m.isFake&&m.type==='OFF').length}[/b] OFFs\n`;
-  bb+=`[img_snob] [b]${p.allMissions.filter(m=>!m.isFake&&m.type==='Conde real').length}[/b] Condes\n`;
-  bb+=`[img_spy] [b]${p.allMissions.filter(m=>m.isFake).length}[/b] Fakes\n`;
-  bb+=`[img_ram] [b]${p.allMissions.filter(m=>m.type==='Anti-snipe').length}[/b] Anti-snipes\n\n`;
-  
-  bb+=`[hr]\n\n`;
-  
-  // Fases
-  bb+=`[b][size=14][color=#840000]📅 Fases da Operação[/color][/size][/b]\n\n`;
-  p.phases.forEach(ph=>{
-    const w=treatyWindow(secs(ph.time));
-    const ms=p.allMissions.filter(m=>m.phase===ph.name);
-    const fakes=ms.filter(m=>m.isFake).length;
-    const reais=ms.filter(m=>!m.isFake).length;
-    
-    bb+=`[b][size=13][color=#840000]${ph.name}[/color][/size][/b]\n`;
-    bb+=`[b]Hora de embate:[/b] [color=#840000][b]${ph.time}[/b][/color]\n`;
-    bb+=`[b]Missões:[/b] ${fakes} fakes · ${reais} reais\n`;
-    bb+=`[b]Proteção:[/b] ${fmt(w.signed)} → ${fmt(w.protectEnd)}\n`;
-    bb+=`[b]Bloqueio:[/b] até ${fmt(w.blockEnd)}\n\n`;
-  });
-  
-  bb+=`[hr]\n\n`;
-  
-  // Ordem de lançamento
-  bb+=`[b][size=14][color=#840000]🕐 Ordem de Lançamento[/color][/size][/b]\n\n`;
-  
-  const sorted=[...p.allMissions].sort((a,b)=>a.launch-b.launch);
-  const byMinute={};
-  sorted.forEach(m=>{
-    const min=Math.floor(m.launch/60);
-    if(!byMinute[min])byMinute[min]=[];
-    byMinute[min].push(m);
-  });
-  
-  Object.entries(byMinute).sort((a,b)=>a[0]-b[0]).forEach(([min,ms])=>{
-    const hora=fmt(ms[0].launch);
-    bb+=`[b][color=#2a5a7a]${hora}[/color][/b]\n`;
-    ms.forEach(m=>{
-      const icon=m.isFake?'[img_spy]':(m.type==='Conde real'?'[img_snob]':(m.type==='Anti-snipe'?'[img_ram]':'[img_axe]'));
-      const cor=m.isFake?'#8b6fa5':(m.type==='Conde real'?'#8a6a10':'#8a2a1a');
-      bb+=`  ${icon} [b]${m.fromOwner||'—'}[/b] `;
-      bb+=`[village]${m.from}[/village] → [village]${m.to}[/village] `;
-      bb+=`[i](${m.troops})[/i]\n`;
+  bb+=`[b]Servidor:[/b] ${world}x · [b]Tratado:[/b] ${t.name} ([color=green]${t.protect}h[/color] proteção · [color=orange]${t.block}h[/color] bloqueio)\n`;
+  bb+=`[b]Jogadores:[/b] ${p.players.length} · [b]Aldeias:[/b] ${p.alliesList.length}\n\n[hr]\n\n`;
+  bb+=`[b][size=14][color=#840000]📦 Forças por Jogador[/color][/size][/b]\n\n`;
+  p.players.forEach(pl=>{
+    const totals={};
+    TROOP_ORDER.forEach(k=>totals[k]=0);
+    pl.villages.forEach(v=>{TROOP_ORDER.forEach(k=>totals[k]+=(v.troops[k]||0))});
+    bb+=`[b]${pl.name}[/b] — ${pl.villages.length} aldeias\n`;
+    TROOP_ORDER.filter(k=>totals[k]>0).forEach(k=>{
+      bb+=`[img_${k==='farmer'?'farmer':k==='templar'?'spear':k==='squire'?'sword':k==='warrior'?'axe':k==='archer'?'bow':k==='spy'?'spy':k==='crusader'?'light':k==='blackknight'?'heavy':k==='ram'?'ram':k==='catapult'?'kata':'snob'}] ${TROOP_LABELS[k]}: [b]${fmtNum(totals[k])}[/b]\n`;
     });
     bb+='\n';
   });
-  
-  bb+=`[hr]\n\n`;
-  
-  // Anti-snipe
-  if(p.allAntiSnipe.length){
-    bb+=`[b][size=14][color=#840000]🛡 Análise Anti-Snipe[/color][/size][/b]\n\n`;
-    p.allAntiSnipe.forEach(a=>{
-      const cov=a.results.filter(r=>r.canCounter).length;
-      bb+=`[b]Alvo:[/b] [village]${a.targetKey}[/village]\n`;
-      bb+=`[b]Cobertura:[/b] ${cov}/${a.results.length} aldeias bloqueáveis\n`;
-      bb+=`[code]`;
-      bb+=`Inimigo      | Snipe máx. | Tua OFF\n`;
-      bb+=`-------------|------------|---------\n`;
-      a.results.forEach(r=>{
-        bb+=`${r.enemy.key.padEnd(12)} | ${fmt(r.maxLaunchSnipe)} | ${fmt(r.myAttackArrival)}\n`;
-      });
-      bb+=`[/code]\n\n`;
+  bb+=`[hr]\n\n[b][size=14][color=#840000]📈 Métricas[/color][/size][/b]\n`;
+  bb+=`[img_axe] [b]${p.allMissions.filter(m=>!m.isFake&&m.type==='OFF').length}[/b] OFFs\n`;
+  bb+=`[img_snob] [b]${p.allMissions.filter(m=>!m.isFake&&m.type==='Conde real').length}[/b] Condes\n`;
+  bb+=`[img_spy] [b]${p.allMissions.filter(m=>m.isFake).length}[/b] Fakes\n`;
+  bb+=`[img_ram] [b]${p.allMissions.filter(m=>m.type==='Anti-snipe').length}[/b] Anti-snipes\n\n[hr]\n\n`;
+  bb+=`[b][size=14][color=#840000]🕐 Ordem de Lançamento[/color][/size][/b]\n\n`;
+  const sorted=[...p.allMissions].sort((a,b)=>a.launch-b.launch),byMinute={};
+  sorted.forEach(m=>{const min=Math.floor(m.launch/60);if(!byMinute[min])byMinute[min]=[];byMinute[min].push(m)});
+  Object.entries(byMinute).sort((a,b)=>a[0]-b[0]).forEach(([min,ms])=>{
+    bb+=`[b][color=#2a5a7a]${fmt(ms[0].launch)}[/color][/b]\n`;
+    ms.forEach(m=>{
+      const icon=m.isFake?'[img_spy]':(m.type==='Conde real'?'[img_snob]':(m.type==='Anti-snipe'?'[img_ram]':'[img_axe]'));
+      bb+=`  ${icon} [b]${m.fromOwner||'—'}[/b] [village]${m.from}[/village] → [village]${m.to}[/village] [i](${m.troops})[/i]\n`;
     });
-    bb+=`[hr]\n\n`;
-  }
-  
-  // Formato de operação
-  bb+=`[b][size=14][color=#840000]📋 Formato de Operação[/color][/size][/b]\n\n`;
-  bb+=`[code]`;
-  bb+=generateExportFormat(p.allMissions);
-  bb+=`[/code]\n\n`;
-  
-  bb+=`[hr]\n\n`;
-  
-  // Avisos
-  bb+=`[b][color=red]⚠ AVISOS IMPORTANTES[/color][/b]\n`;
-  bb+=`[list]\n`;
-  bb+=`[*]Os fakes chegam [b]durante a proteção[/b] do tratado — forçam o inimigo a assinar cedo ou a sofrer dano real\n`;
-  bb+=`[*]Os ataques reais chegam [b]após a proteção[/b] — na janela de ouro em que o inimigo está indefeso\n`;
-  bb+=`[*]Os anti-snipes atacam 1s antes do inimigo poder enviar defesa — bloqueia os snipes\n`;
-  bb+=`[*]Confirmar as horas de lançamento no jogo antes de enviar\n`;
-  bb+=`[/list]\n\n`;
-  
-  bb+=`[hr]\n`;
-  bb+=`[i][color=#666]Operação gerada por [b]-AbaddoN-[/b] · KingsAge Planeador de Operações[/color][/i]\n`;
-  
+    bb+='\n';
+  });
+  bb+=`[hr]\n[i][color=#666]Gerado por [b]-AbaddoN-[/b] · KingsAge Planeador de Operações[/color][/i]\n`;
   return bb;
 }
 
 function copyBBCode(){
   const bb=generateBBCode();
   if(!bb){alert('Gera a operação primeiro.');return}
-  
   const modal=document.createElement('div');
   modal.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
-  modal.innerHTML=`
-    <div style="background:#F1EBDD;border:2px solid #CFAB65;padding:15px;max-width:900px;width:100%;max-height:90vh;overflow-y:auto;font-family:Verdana,Arial,sans-serif">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;border-bottom:2px solid #CFAB65;padding-bottom:8px">
-        <b style="color:#840000;font-size:14px">📨 BB-Code para o KingsAge</b>
-        <button onclick="this.closest('div').parentElement.parentElement.remove()" style="background:#b9675c;color:#fff;border:1px solid #8a3d35;padding:3px 10px;cursor:pointer;font-weight:bold">X</button>
-      </div>
-      <p style="font-size:11px;color:#666;margin:0 0 10px 0">
-        Copia o texto abaixo e cola numa <b>mensagem do KingsAge</b>. Os <code>[village]X|Y[/village]</code> ficam clicáveis no jogo.
-      </p>
-      <textarea id="bbCodeOutput" style="width:100%;height:400px;font-family:'Courier New',monospace;font-size:11px;border:1px solid #CFAB65;background:#fff;padding:10px;color:#2a1410" readonly></textarea>
-      <div style="display:flex;gap:8px;margin-top:10px">
-        <button onclick="document.getElementById('bbCodeOutput').select();document.execCommand('copy');this.textContent='✓ Copiado!'" style="background:#7aa87a;color:#fff;border:1px solid #5a8a5a;padding:8px 16px;cursor:pointer;font-weight:bold;font-family:Verdana,Arial,sans-serif">📋 Copiar BB-Code</button>
-        <button onclick="this.closest('div').parentElement.parentElement.remove()" style="background:#e8d8b0;border:1px solid #c4a76e;padding:8px 16px;cursor:pointer;font-family:Verdana,Arial,sans-serif">Fechar</button>
-      </div>
-    </div>
-  `;
+  modal.innerHTML=`<div style="background:#F1EBDD;border:2px solid #CFAB65;padding:15px;max-width:900px;width:100%;max-height:90vh;overflow-y:auto;font-family:Verdana,Arial,sans-serif"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;border-bottom:2px solid #CFAB65;padding-bottom:8px"><b style="color:#840000;font-size:14px">📨 BB-Code para o KingsAge</b><button onclick="this.closest('div').parentElement.parentElement.remove()" style="background:#b9675c;color:#fff;border:1px solid #8a3d35;padding:3px 10px;cursor:pointer;font-weight:bold">X</button></div><p style="font-size:11px;color:#666;margin:0 0 10px 0">Copia e cola numa mensagem do KingsAge.</p><textarea id="bbCodeOutput" style="width:100%;height:400px;font-family:'Courier New',monospace;font-size:11px;border:1px solid #CFAB65;background:#fff;padding:10px;color:#2a1410" readonly></textarea><div style="display:flex;gap:8px;margin-top:10px"><button onclick="document.getElementById('bbCodeOutput').select();document.execCommand('copy');this.textContent='✓ Copiado!'" style="background:#7aa87a;color:#fff;border:1px solid #5a8a5a;padding:8px 16px;cursor:pointer;font-weight:bold">📋 Copiar BB-Code</button><button onclick="this.closest('div').parentElement.parentElement.remove()" style="background:#e8d8b0;border:1px solid #c4a76e;padding:8px 16px;cursor:pointer">Fechar</button></div></div>`;
   document.body.appendChild(modal);
   document.getElementById('bbCodeOutput').value=bb;
 }
 
 function generateExportFormat(missions){
-  const byPhase={};
-  missions.forEach(m=>{if(!byPhase[m.phase])byPhase[m.phase]=[];byPhase[m.phase].push(m)});
-  const today=new Date();
-  const dateStr=`${String(today.getDate()).padStart(2,'0')}.${String(today.getMonth()+1).padStart(2,'0')}.${today.getFullYear()}`;
+  const byPhase={};missions.forEach(m=>{if(!byPhase[m.phase])byPhase[m.phase]=[];byPhase[m.phase].push(m)});
+  const today=new Date(),dateStr=`${String(today.getDate()).padStart(2,'0')}.${String(today.getMonth()+1).padStart(2,'0')}.${today.getFullYear()}`;
   let out='';
-  Object.entries(byPhase).forEach(([phase,ms])=>{
-    out+=`Fase : ${phase}\nCoordenadas :\n`;
-    ms.sort((a,b)=>a.launch-b.launch).forEach(m=>{out+=`${m.to}/${m.type}/${dateStr}/${fmt(m.arrival)}\n`});
-    out+='\n';
-  });
+  Object.entries(byPhase).forEach(([phase,ms])=>{out+=`Fase : ${phase}\nCoordenadas :\n`;ms.sort((a,b)=>a.launch-b.launch).forEach(m=>{out+=`${m.to}/${m.type}/${dateStr}/${fmt(m.arrival)}\n`});out+='\n'});
   return out;
 }
-function copyExport(){
-  const p=window._lastPlan;
-  if(!p){alert('Gera a operação primeiro.');return}
-  const txt=generateExportFormat(p.allMissions);
-  navigator.clipboard.writeText(txt).then(()=>alert('Formato copiado!'));
-}
+function copyExport(){const p=window._lastPlan;if(!p){alert('Gera primeiro.');return}navigator.clipboard.writeText(generateExportFormat(p.allMissions)).then(()=>alert('Copiado!'))}
 
+/* ===== Sugestões ===== */
 function suggestTargets(){
   const parsed=parseCoords($('targetsInput').value);
   if(!parsed.length||!alliesList.length){return}
@@ -900,31 +797,29 @@ function suggestTargets(){
   }).sort((a,b)=>a.score-b.score);
   let html='<div class="phase"><h4>💡 Alvos Analisados</h4>';
   _suggestions.slice(0,15).forEach(s=>{
-    html+=`<div class="village-row"><span><b>${s.tgt.key}</b> · Distância mínima: ${s.minDist.toFixed(1)} · Aldeias a menos de 4h: ${s.reach}</span></div>`;
+    html+=`<div class="village-row"><span><b>${s.tgt.key}</b> · Dist. ${s.minDist.toFixed(1)} · ${s.reach} aldeias a <4h</span></div>`;
   });
   html+='</div>';
   $('suggestOutput').innerHTML=html;
 }
 
-function loadSampleTargets(){
-  $('targetsInput').value=`444|664\n537|519\n533|512\n530|512`;
-  suggestTargets();
+/* ===== Exemplos ===== */
+function loadSampleOverview(){
+  $('overviewInput').value = '[{"x":509,"y":471,"name":"001 - Exemplo","troops":{"farmer":51,"warrior":0,"spy":2630,"blackknight":5935,"ram":4}},{"x":525,"y":491,"name":"002 - Exemplo2","troops":{"warrior":29078,"ram":715,"catapult":73}}]';
+  $('allyPlayer').value = 'Exemplo';
 }
-function loadSampleEnemies(){
-  $('enemies').value=`520|510\n525|515\n530|505\n510|500\n515|520`;
-  refreshEnemies();
-}
-function refreshEnemies(){
-  const l=parseCoords($('enemies').value);
-  $('enemyStatus').innerHTML=l.length+' aldeias';
-  $('srvLabel').textContent=$('worldSpeed').value+'x';
-}
+function loadSampleTargets(){$('targetsInput').value=`444|664\n537|519\n533|512\n530|512`;suggestTargets()}
+function loadSampleEnemies(){$('enemies').value=`520|510\n525|515\n530|505\n510|500\n515|520`;refreshEnemies()}
+function refreshEnemies(){const l=parseCoords($('enemies').value);$('enemyStatus').innerHTML=l.length+' aldeias';$('srvLabel').textContent=$('worldSpeed').value+'x'}
 $('enemies').addEventListener('input',refreshEnemies);
-$('worldSpeed').addEventListener('change',refreshEnemies);
+$('worldSpeed').addEventListener('change',()=>{aggregateAllies();renderPlayers()});
+$('minOffPower').addEventListener('input',()=>renderPlayers());
 
-addPlayer();
+/* ===== Init ===== */
+showSnippet();
 addFakePhase();
 addRealPhase();
+updatePlayersSection();
 refreshEnemies();
 </script>
 </body>
