@@ -15,38 +15,41 @@
 -->
 <style>
 *{box-sizing:border-box}html,body{height:100%;margin:0;padding:0}
-body{background:#1a1208 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAFElEQVQIW2NkYGD4z8DAwMgABXAGAA4dAgHqL0G0AAAAAElFTkSuQmCC");font-family:Verdana,Arial,sans-serif;font-size:12px;line-height:15px;color:#000}
-#main-content{max-width:1600px;margin:0 auto;padding:15px;background:#F1EBDD;border-left:1px solid #CFAB65;border-right:1px solid #CFAB65;min-height:100vh}
-h1{font-size:18px;color:#840000;margin:0 0 5px 0;padding-top:5px}
-h2{font-size:14px;color:#840000;margin:0;border-bottom:2px solid #CFAB65;padding-bottom:3px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+body{background-color:#0d0905;background-image:radial-gradient(ellipse at 50% 0%,rgba(132,0,0,0.22),transparent 55%),url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5MCIgaGVpZ2h0PSI5MCI+CjxyZWN0IHdpZHRoPSI5MCIgaGVpZ2h0PSI5MCIgZmlsbD0iIzEyMGMwNiIvPgo8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM0YTMzMTUiIHN0cm9rZS13aWR0aD0iMS4yIiBvcGFjaXR5PSIwLjU1Ij4KPHBhdGggZD0iTTQ1IDE0IEw2MCAyMCBMNjAgNDIgQzYwIDU2IDUzIDY0IDQ1IDY4IEMzNyA2NCAzMCA1NiAzMCA0MiBMMzAgMjAgWiIvPgo8cGF0aCBkPSJNNDUgMjQgTDQ1IDQ2IE0zNyAzMiBMNTMgMzIiLz4KPC9nPgo8ZyBmaWxsPSJub25lIiBzdHJva2U9IiNDRkFCNjUiIHN0cm9rZS13aWR0aD0iMC44IiBvcGFjaXR5PSIwLjE4Ij4KPHBhdGggZD0iTTQ1IDE0IEw2MCAyMCBMNjAgNDIgQzYwIDU2IDUzIDY0IDQ1IDY4IEMzNyA2NCAzMCA1NiAzMCA0MiBMMzAgMjAgWiIvPgo8L2c+Cjwvc3ZnPgo=");background-repeat:repeat;font-family:Verdana,Arial,sans-serif;font-size:12px;line-height:15px;color:#000}
+#main-content{max-width:1600px;margin:20px auto;padding:15px;background:#F1EBDD;border:1px solid #CFAB65;box-shadow:0 0 0 3px #2a1410,0 0 25px 4px rgba(0,0,0,0.6);min-height:calc(100vh - 40px)}
+h1{font-size:18px;color:#840000;margin:0 0 5px 0;padding-top:5px;font-weight:normal}
+h2{font-size:14px;color:#5a3d1a;margin:0;border-bottom:1px solid #CFAB65;padding-bottom:3px;display:flex;justify-content:space-between;align-items:center;gap:6px}
 h3{font-size:12px;font-weight:bold;color:#5a3d1a;margin:12px 0 5px 0}
-h4{font-size:12px;font-weight:bold;font-style:italic;margin:8px 0 4px 0}
+h4{font-size:12px;font-weight:bold;font-style:italic;margin:8px 0 4px 0;color:#5a3d1a}
 p{margin:0 0 8px 0;line-height:15px}
-a{color:#840000;text-decoration:none;cursor:pointer}a:hover{color:#072350}
+a{color:#840000;text-decoration:none;font-weight:normal;cursor:pointer}a:hover,a:active{color:#072350}
 label{display:block;color:#5a3d1a;font-size:11px;margin:6px 0 3px 0;font-weight:bold}
-input,textarea,select{font-family:Verdana,Arial,sans-serif;font-size:11px;border:1px solid #c4a76e;background-color:#f6dba4;padding:4px 5px;color:#000;width:100%}
+input,textarea,select{font-family:Arial,Verdana,sans-serif;font-size:12px;border:1px solid #c4a76e;background-color:#f6dba4;padding:4px 5px;color:#000;width:100%;margin:1px 0}
 textarea{font-family:"Courier New",monospace;resize:vertical}
-button,input[type=submit]{font-family:Verdana,Arial,sans-serif;font-size:11px;border:1px solid #c4a76e;background-color:#d6b371;padding:5px 12px;cursor:pointer;color:#2a1410;font-weight:bold}
-button:hover,input[type=submit]:hover{border:1px solid #b89251;background-color:#b48f52}
+button,input[type=submit],input[type=button]{font-family:Arial,Verdana,sans-serif;font-size:11px;border:1px solid #c4a76e;background-color:#d6b371;padding:5px 12px;cursor:pointer;color:#2a1410;font-weight:bold}
+button:hover,input[type=submit]:hover,input[type=button]:hover{border:1px solid #b89251;background-color:#b48f52}
 button.sec{background-color:#e8d8b0;font-weight:normal}button.sec:hover{background-color:#d4c090}
 button.danger{background-color:#b9675c;color:#fff;border-color:#8a3d35}button.danger:hover{background-color:#8a3d35}
 button.blue{background-color:#7a99b8;color:#fff;border-color:#5a7a9a}button.blue:hover{background-color:#5a7a9a}
 button.green{background-color:#7aa87a;color:#fff;border-color:#5a8a5a}button.green:hover{background-color:#5a8a5a}
 button.small{padding:3px 7px;font-size:10px}
+/* Botão dourado "awesome-button" oficial do KingsAge — usado para a ação principal */
+.awesome-button{display:inline-block;padding:8px 20px;vertical-align:middle;color:#fbd77d;text-decoration:none;border:1px solid #fcd87e;border-radius:5px;box-shadow:0 0 0 1px #2a1410;background:#390301;background:linear-gradient(180deg,#4f0000,#220502);cursor:pointer;font-family:Verdana,Arial,sans-serif;font-size:13px;font-weight:bold}
+.awesome-button:hover{background:linear-gradient(180deg,#AA5100,#A02C00);color:#fff2c9}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .card{background:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAFElEQVQIW2NkYGD4z8DAwMgABXAGAA4dAgHqL0G0AAAAAElFTkSuQmCC") #EFE6C9;border:1px solid #CFAB65;padding:10px;margin-bottom:12px}
-.card h2{margin:-10px -10px 10px -10px;padding:6px 10px;background:#E1D7BC;border-bottom:1px solid #CFAB65;font-size:13px}
+.card h2{margin:-10px -10px 10px -10px;padding:9px 10px;background:linear-gradient(180deg,#E8DEBF,#D9CBA0);border-bottom:1px solid #CFAB65;font-size:13px}
 #results{grid-column:1/-1}
-table.borderlist{width:100%;border-collapse:collapse;border:1px solid #CFAB65;margin:5px 0;background:#F8F4E8;font-size:11px}
-table.borderlist th{background:#E1D7BC;padding:4px 6px;border:1px solid #CFAB65;text-align:left;font-size:11px;color:#5a3d1a}
-table.borderlist td{background:#F8F4E8;padding:3px 6px;border:1px solid #CFAB65;font-size:11px}
+table.borderlist{width:100%;border-collapse:collapse;border-spacing:0;border:1px solid #CFAB65;margin:5px 0;background:#F8F4E8;font-size:12px;empty-cells:show}
+table.borderlist th{background:linear-gradient(180deg,#EFE4C4,#DCC998);padding:0 3px;height:26px;border:1px solid #CFAB65;text-align:left;font-size:12px;color:#5a3d1a}
+table.borderlist td{background:#F8F4E8;padding:2px 6px;border:1px solid #CFAB65;font-size:11px;height:21px}
 table.borderlist tr:nth-child(even) td{background:#F1EBDD}table.borderlist tr:hover td{background:#E3C693}
 .summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:5px;margin-bottom:10px}
 .stat{background:#F8F4E8;border:1px solid #CFAB65;padding:6px 8px;text-align:center}
 .stat .v{font-size:16px;color:#840000;font-weight:bold;line-height:20px}
 .stat .l{font-size:10px;color:#666;text-transform:uppercase;margin-top:2px}
 .stat.ok .v{color:#2a7a2a}.stat.warn .v{color:#b8860b}.stat.bad .v{color:#990000}
-.alert{padding:6px 10px;border-radius:2px;margin:6px 0;font-size:11px;border:1px solid}
+.alert{padding:6px 10px;margin:6px 0;font-size:11px;border:1px solid}
 .alert.ok{background:#e8f5e8;border-color:#7aa87a;color:#2a7a2a}
 .alert.bad{background:#fde8e8;border-color:#b9675c;color:#990000}
 .alert.warn{background:#fdf5e0;border-color:#d4b060;color:#8a6a10}
@@ -86,11 +89,11 @@ table.borderlist tr:nth-child(even) td{background:#F1EBDD}table.borderlist tr:ho
 .troop-stat .v{font-size:13px;color:#840000;font-weight:bold;line-height:16px}
 .troop-stat .l{font-size:9px;color:#666;text-transform:uppercase}
 .tip{display:inline-block;width:14px;height:14px;line-height:14px;text-align:center;background:#840000;color:#fff;border-radius:50%;font-size:10px;font-weight:bold;cursor:help;margin-left:4px;position:relative;vertical-align:middle;font-family:Arial,sans-serif}
-.tip:hover::after{content:attr(data-tip);position:absolute;left:50%;transform:translateX(-50%);bottom:130%;background:#2a1410;color:#F8F4E8;padding:6px 9px;border:1px solid #CFAB65;border-radius:3px;font-size:10px;font-weight:normal;white-space:normal;width:240px;z-index:100;text-align:left;line-height:1.4;box-shadow:0 2px 6px rgba(0,0,0,0.4);font-family:Verdana,Arial,sans-serif}
-.tip:hover::before{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:120%;border:6px solid transparent;border-top-color:#2a1410;z-index:101}
+.tip:hover::after{content:attr(data-tip);position:absolute;left:50%;transform:translateX(-50%);bottom:130%;background:#F0E6C8;color:#2a1410;padding:6px 9px;border:1px solid #CFAB65;border-radius:3px;font-size:10px;font-weight:normal;white-space:normal;width:240px;z-index:100;text-align:left;line-height:1.4;box-shadow:0 2px 6px rgba(0,0,0,0.4);font-family:Verdana,Arial,sans-serif}
+.tip:hover::before{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:120%;border:6px solid transparent;border-top-color:#CFAB65;z-index:101}
 .tip-tl:hover::after{left:0;transform:none}.tip-tl:hover::before{left:10px;transform:none}
 .tip-tr:hover::after{left:auto;right:0;transform:none}.tip-tr:hover::before{left:auto;right:10px;transform:none}
-footer{margin-top:25px;padding:15px 0 8px 0;border-top:2px solid #CFAB65;text-align:center;line-height:1.7}
+footer{margin-top:25px;padding:15px 0 8px 0;border-top:1px solid #CFAB65;text-align:center;line-height:1.7}
 footer .sig{font-family:Georgia,"Times New Roman",serif;font-size:16px;color:#840000;font-weight:bold;letter-spacing:2px;text-shadow:1px 1px 0 #E1D7BC}
 footer .tool-name{font-size:11px;color:#5a3d1a;margin-top:3px}
 footer .note{font-size:10px;color:#888;margin-top:6px;font-style:italic}
@@ -98,6 +101,17 @@ footer .note{font-size:10px;color:#888;margin-top:6px;font-style:italic}
 .snippet-steps{background:#fdf5e0;border-left:3px solid #d4b060;padding:10px;margin:8px 0;font-size:11px}
 .snippet-steps ol{margin:4px 0 0 20px;padding:0}
 .snippet-steps li{margin:3px 0}
+/* Caixa de dica de estratégia — estilo tooltip/hint oficial do jogo (fundo #F0E6C8) */
+.strategy-tip{background:#F0E6C8;border:1px solid #CFAB65;border-left:4px solid #840000;padding:10px 12px;margin:6px 0;font-size:11px;line-height:1.5}
+.strategy-tip .st-head{display:flex;align-items:center;gap:6px;font-weight:bold;color:#840000;font-size:12px;margin-bottom:6px}
+.strategy-tip table.borderlist{margin-top:6px}
+.strategy-tip .st-foot{margin-top:6px;font-style:italic;color:#5a3d1a}
+.tuto-acc{background:#F8F4E8;border:1px solid #CFAB65;margin:6px 0}
+.tuto-acc summary{list-style:none;cursor:pointer;padding:8px 10px;background:linear-gradient(180deg,#E8DEBF,#D9CBA0);font-weight:bold;color:#5a3d1a;font-size:11.5px;display:flex;align-items:center;gap:6px}
+.tuto-acc summary::-webkit-details-marker{display:none}
+.tuto-acc summary::before{content:"▸";color:#840000;font-size:11px}
+.tuto-acc[open] summary::before{content:"▾"}
+.tuto-acc .tuto-body{padding:10px 12px;font-size:11px;line-height:1.6}
 @media(max-width:900px){.grid,.row,.row3,.row4,.row5{grid-template-columns:1fr}#results{grid-column:auto}}
 </style>
 </head>
@@ -107,6 +121,128 @@ footer .note{font-size:10px;color:#888;margin-top:6px;font-style:italic}
 <h1>⚔ KingsAge Planeador de Operações <span style="font-size:11px;color:#666;font-weight:normal">— Servidor: <b id="srvLabel">1x</b></span></h1>
 
 <div class="grid">
+
+<!-- ===== DICA DE ESTRATÉGIA ===== -->
+<section class="card" style="grid-column:1/-1">
+<h2>💡 Dica de Estratégia — Condes necessários por pontuação <span class="tip tip-tr" data-tip="Referência rápida para calcular quantos condes enviar antes de organizar a fase real da operação.">?</span></h2>
+<div class="strategy-tip">
+  <div class="st-head">👑 Quantos condes preciso para conquistar uma colónia?</div>
+  <p>Tens tudo o que é necessário e preparas-te para expandir o teu império, mas tens dúvidas sobre quantos condes precisas para conquistar uma colónia. As fontes da comunidade não são unânimes nos limiares exatos (variam um pouco por versão/servidor), por isso aqui ficam as duas referências mais comuns — usa-as como intervalo de segurança, não como valor absoluto:</p>
+  <table class="borderlist">
+    <thead><tr><th>Pontuação da colónia (poderio/aprovação)</th><th>Condes necessários</th></tr></thead>
+    <tbody>
+      <tr><td>50 – 4.500 pontos</td><td><b>2 condes</b></td></tr>
+      <tr><td>4.500 – 6.750 pontos</td><td><b>3 condes</b></td></tr>
+      <tr><td>6.750 – 9.000 pontos</td><td><b>4 condes</b></td></tr>
+      <tr><td>9.000 – 9.990 pontos</td><td><b>5 condes</b></td></tr>
+      <tr><td>10.000 pontos (Memorial)</td><td><b>6 condes</b></td></tr>
+    </tbody>
+  </table>
+  <p class="small">Referência alternativa (mais conservadora, com margens intermédias): 0–4.500 → 2 · 4.500–5.500 → 2 ou 3 · 5.500–6.750 → 3 · 6.750–8.250 → 3 ou 4 · 8.250–9.000 → 4 · 9.000–10.000 → 5 ou 6. Se a pontuação da colónia estiver perto de um limite, é preferível enviar sempre o valor mais alto e não arriscar.</p>
+  <p class="st-foot"><b>Importante:</b> cada ataque vitorioso com conde reduz o poderio/aprovação entre ~2.000 e 2.750 pontos (menos se houver monumento), mas o <b>primeiro</b> ataque nunca reduz mais de metade do valor total — e só conta se o conde sobreviver. A moral/aprovação recupera com o tempo, por isso os ataques devem ser sucessivos e pouco espaçados. <b>Enviar vários condes no mesmo ataque não ajuda</b> — só 1 conde por onda reduz o poderio, os restantes são desperdiçados; o mais eficiente é 1 conde por ataque, em ataques seguidos. Atenção também ao <b>ataque suicida</b>: se um dos teus ataques já conquista a aldeia, os ataques seguintes que tinhas programado acabam por atingir a tua própria aldeia — cancela-os a tempo.</p>
+</div>
+</section>
+
+<!-- ===== TUTORIAIS ===== -->
+<section class="card" style="grid-column:1/-1">
+<h2>📚 Tutoriais e Dicas do KingsAge <span class="tip tip-tr" data-tip="Resumo em português dos tutoriais de referência da comunidade, para consultares sem sair da dashboard.">?</span></h2>
+<details class="tuto-acc">
+  <summary>⚖ Qual a melhor estratégia: atacante ou defensiva?</summary>
+  <div class="tuto-body">
+    Há duas abordagens principais para organizar as tuas aldeias:<br><br>
+    <b>Aldeia autossuficiente</b> — cada aldeia desenvolve um pouco de tudo (defesa: templário, escudeiro, arqueiro, cav. negro; ataque: guerreiro, cruzado). Vantagem: não depende do sucesso das aldeias vizinhas. Desvantagem: mais difícil de aguentar ataques massivos e mais difícil de atacar defesas fortes.<br><br>
+    <b>Aldeias especializadas (a mais comum)</b> — separas aldeias de Defesa (mais templário/escudeiro/arqueiro/cav. negro) de aldeias de Ataque (mais guerreiro/cruzado), na proporção que preferires:
+    <ul style="margin:6px 0 0 18px">
+      <li>Jogador defensivo → 2:1 (defesa:ataque)</li>
+      <li>Jogador equilibrado → 1:1</li>
+      <li>Jogador ofensivo → 1:2</li>
+    </ul>
+    Defensivo: mais fácil aguentar ataques massivos constantes, mas conquista mais devagar, sobretudo contra defesas fortes. Ofensivo: conquista mais depressa mesmo contra defesas elevadas, mas fica mais vulnerável a ataques massivos.<br><br>
+    Na prática, um jogador ofensivo deve estar sempre presente nas operações da aliança — ler o jogo, planear ataques, farms e fakes, e manter pressão sobre o inimigo. Um jogador defensivo ajuda mais mandando fakes diários (também rendem pedras da roleta), enviando defesas para as conquistas recentes dos aliados ofensivos, e evitando ficar com aldeias em zonas de risco — nesse caso, é preferível trocar essa aldeia com um aliado ofensivo que tenha uma aldeia numa posição mais segura.
+  </div>
+</details>
+<details class="tuto-acc">
+  <summary>❓ Perguntas frequentes sobre condes e conquistas</summary>
+  <div class="tuto-body">
+    <b>Posso perder tropas ao atacar uma aldeia "vazia"?</b> Sim — mesmo sem tropas visíveis, a muralha e os colonos livres ainda têm poder militar. Nunca envies um conde sozinho (nem só com espiões): sem escolta, morre sempre.<br><br>
+    <b>Há limite de condes?</b> Não, é virtualmente ilimitado — mas cada armadura nova fica mais cara que a anterior. Truque comum: usar aldeias já cheias de tropas e com produção sobrando só para fabricar armaduras, e depois mandar os condes prontos para outras aldeias.<br><br>
+    <b>O que acontece se perder uma aldeia?</b> Perdes só essa aldeia — as armaduras que já tinhas ficam guardadas e continuam registadas no teu perfil e no da aliança. Só quando ficas sem nenhuma aldeia é que "perdes" mesmo: aparece um ecrã a perguntar se queres recomeçar e a pedir para escolheres uma nova localização (geralmente mais isolada, para teres tempo de recuperar) — mas ao recomeçar perdes todas as armaduras que tinhas guardado.<br><br>
+    <b>Vale a pena subir o nível do Armeiro?</b> Sim — a partir do nível 5 passa a ser possível usar os recursos de todas as aldeias diretamente para as armaduras, sem teres de os enviar um a um para a aldeia do Armeiro. O nível da Mansão, por sua vez, acelera a produção dos condes.
+  </div>
+</details>
+<details class="tuto-acc">
+  <summary>🛡 Atacam-te... o que fazer?</summary>
+  <div class="tuto-body">
+    A melhor defesa é ter a muralha no nível máximo (20) e tropas defensivas suficientes para que atacar-te deixe de compensar — quem tenta perde as próprias tropas valiosas. Usar inteligência e psicologia evita muitas batalhas antes de acontecerem.<br><br>
+    Se fores atacado, pede ajuda à aliança: todos ganham ao ajudar-se mutuamente (e ajudar com apoios também rende pedras para a roleta). Sem tropas para defender, sobe o esconderijo para travar saques — ao fim de 3-4 tentativas sem saque, a maioria desiste. Enquanto reconstróis o exército, não deixes as tropas novas na cidade (serão limpas em cada vaga); envia-as como apoio para uma colónia aliada com pontuação muito baixa (ex. 50 pts), que pela regra 10:1 fica fora do alcance de quase todos. Quando tiveres um bom contingente reunido com outros jogadores, manda tudo de volta de uma vez para esmagar o ataque do inimigo de surpresa — e continua a produzir tropas sem parar depois disso.
+  </div>
+</details>
+<details class="tuto-acc">
+  <summary>🏰 Quero conquistar outra colónia</summary>
+  <div class="tuto-body">
+    Pré-requisitos: Alquimista nível 5 (desbloqueia a Mansão) → construir a Mansão → construir a Ourivesaria. Só depois disso é possível criar condes.<br><br>
+    Passos: <b>1)</b> na Ourivesaria, cria uma armadura por cada conde que queiras; <b>2)</b> na Mansão, cria os condes (são caros — garante armazéns com pelo menos 120.000 de cada recurso); <b>3)</b> ataca a colónia alvo com o conde e um exército grande — se venceres e o conde sobreviver, o poderio da colónia desce; <b>4)</b> repete até o poderio chegar a 0, o que conquista a colónia.<br><br>
+    O poderio equivale à pontuação da colónia. Cada ataque vitorioso com conde reduz entre 2.250 e 2.750 pontos (1.750–2.250 se houver monumento), mas nunca mais de metade do poderio restante num só ataque — e só conta se o conde sobreviver à batalha. Após a conquista, a zona de poder sobe automaticamente para 30% do máximo. Cuidado: destruir muralha/monumento no mesmo ataque em que envias o conde pode deixar-te a poucos pontos da conquista sem dares por isso.
+  </div>
+</details>
+<details class="tuto-acc">
+  <summary>⏱ Segundos exatos de chegada de um ataque na bandeira</summary>
+  <div class="tuto-body">
+    A bandeira não mostra os segundos de chegada dos ataques inimigos, mas dá para calcular: soma os segundos do "tempo restante" do ataque com os segundos da hora atual do servidor; se o total for ≥ 60, subtrai 60 repetidamente até ficar abaixo de 60 — esse valor final são os segundos exatos de chegada.<br><br>
+    Atalho mais simples: observa quando o "tempo restante" ou a "hora do servidor" chegam a 00 segundos — nesse instante, os segundos do outro valor são a resposta.
+  </div>
+</details>
+<details class="tuto-acc">
+  <summary>🖼 Colocar imagens via BBcode no fórum da aliança</summary>
+  <div class="tuto-body">
+    Para uma imagem já publicada na internet: encontra-a (ex. Google Imagens → "Ver imagem", confirmando que o URL acaba em .jpg/.png), copia o link e coloca-o entre <b>[img][/img]</b>. Publica o post e a imagem aparece.<br><br>
+    Se a imagem estiver só no teu computador, sobe-a primeiro para um serviço de hospedagem de imagens (ex. tinypic.com) e usa o URL gerado da mesma forma.
+  </div>
+</details>
+<details class="tuto-acc">
+  <summary>🌍 Informação importante de cada mundo/servidor</summary>
+  <div class="tuto-body">
+    Ao começar num mundo novo, vale a pena consultar em <i>Ajuda → Outra informação</i> os parâmetros que o definem: velocidade de construção e de movimento das tropas, se é permitido derrubar edifícios, se colónias abandonadas continuam a crescer sozinhas, o mínimo de tropas por ataque (normalmente nível do quartel × 3), a duração da proteção inicial contra ataques e depois contra conquistas, a relação máxima atacante:defensor (normalmente 10:1) durante essa proteção, o bónus noturno de defesa, os prazos para cancelar ataques ou mulas, a distância máxima de viagem dos condes, e o intervalo de perda/recuperação de poderio por hora. Conhecer estes valores logo no início dá vantagem sobre quem não os verifica.
+  </div>
+</details>
+<details class="tuto-acc">
+  <summary>⚔ Que tropas criar em cada momento</summary>
+  <div class="tuto-body">
+    <b>Defensivo, mundo novo:</b> templários e escudeiros — baratos, rápidos e já disponíveis com quartel nível 1 (o arqueiro só chega ao nível 6 e custa o dobro por pouca vantagem extra).<br><br>
+    <b>Defensivo, mundo avançado (minas no máximo):</b> arcos em massa, já que os recursos deixam de ser o entrave, combinados com cavaleiros negros (a partir do quartel nível 16 — excelente defesa e muito rápidos para reforçar colónias distantes, mas caros, lentos de produzir e custam 6 colonos cada) e pelo menos ~1000 espiões por colónia para dificultar a espionagem inimiga.<br><br>
+    <b>Ofensivo, início de mundo:</b> berserkers (baratos, fortes contra infantaria) e cruzados (rápidos, fortes contra infantaria, ideais para saquear colónias já limpas), sempre com alguns escuderos a acompanhar as OFFs pela sua elevada capacidade de carga de recursos.
+  </div>
+</details>
+<details class="tuto-acc">
+  <summary>👑 Aliança perfeita — regra de distribuição de colónias</summary>
+  <div class="tuto-body">
+    Princípio central: nenhuma colónia conquistada pertence a quem a conquistou — pertence à aliança, e é cedida a quem tem menos colónias, equilibrando o crescimento de todos.<br><br>
+    Regra prática: a diferença entre o jogador com mais e o com menos colónias não pode ultrapassar <b>+4 colónias</b> (para números baixos) ou <b>o dobro</b> (para números mais altos) — aplica-se a condição mais permissiva das duas. Isto acelera o crescimento dos pequenos, obriga os grandes a ajudar mais (só assim voltam a crescer), evita disputas por conquistas logo após tratados de paz e mantém a aliança mais unida.<br><br>
+    Riscos apontados: jogadores pouco ativos continuam identificáveis e não beneficiam sem contribuir; o "desperdício" de condes ao reatacar a mesma colónia é irrelevante a meio-jogo; e jogadores focados só em subir no ranking pessoal tendem a rejeitar o sistema — normalmente sinal de que trarão problemas à aliança mais tarde.
+  </div>
+</details>
+<details class="tuto-acc">
+  <summary>🎯 Ajustar condes logo após uma ofensiva</summary>
+  <div class="tuto-body">
+    Objetivo: lançar os condes de conquista mesmo a seguir a uma limpeza, sem dar tempo ao inimigo para reagir.<br><br>
+    Método: descobre o atraso (lag) da tua ligação lançando ataques de teste e comparando a hora de chegada mostrada com o instante em que clicaste "Ok" (normalmente 1-2 segundos); depois lança o ataque real esse número de segundos antes da hora pretendida, arredondando para cima para nunca chegar tarde. Para vários condes seguidos, clica repetidamente em "Ok" ou usa Tab até focar o botão e mantém Enter pressionado (também útil para disparar muitos fakes no mesmo segundo). Para encadear limpeza + condes em separado, prepara duas abas do navegador com o cursor já sobre o botão "Ok" em ambas, lança a limpeza numa e muda logo para a outra com Ctrl+Tab para disparar os condes de seguida. Só a prática repetida torna este timing fiável.
+  </div>
+</details>
+<details class="tuto-acc">
+  <summary>🎰 Usar a roleta para bónus grátis</summary>
+  <div class="tuto-body">
+    A roleta (Sala do Trono → Roda da Fortuna) dá bónus como envios de recursos, tratados de paz, chamarizes, plantas de construção ou conselheiros reais, sem gastar coroas. Cada "dado" gasto muda os prémios disponíveis; cada "pedra" gasta faz rodar a roleta.<br><br>
+    As pedras compram-se com coroas, mas também se ganham gratuitamente lutando contra jogadores fora da aliança e pelo menos 200 posições acima ou abaixo no ranking geral — quanto mais tropas (tuas ou do inimigo) morrerem na batalha, maior a hipótese de prémio; apoiar aliados atacados também conta. Só é possível ganhar <b>uma pedra por dia</b> — mais ataques depois disso não rendem mais pedras nesse dia.
+  </div>
+</details>
+<details class="tuto-acc">
+  <summary>🩸 Que tropas criar quando estás em inferioridade numérica</summary>
+  <div class="tuto-body">
+    Numa zona rodeada de inimigos mais fortes, a prioridade é subir a defesa depressa sem gastar tudo em arcos/cavaleiros negros (lentos, caros, e os cavaleiros exigem quartel nível 16). Começa por templários e escudeiros — muito mais baratos e rápidos por ponto de defesa do que arqueiros nesta fase (um templário custa cerca de 120 recursos e dá 300/100 de defesa infantaria/cavalaria; um arqueiro custa cerca de 320 por uma vantagem pequena). Produz também alguns arqueiros pelo caminho para equilibrar o consumo de madeira e minério.<br><br>
+    Só depois de uma base sólida (referência: 5.000 templários + 5.000 escudeiros, ou 15.000+15.000 em zonas muito hostis) vale a pena investir pesadamente em arqueiros e cavaleiros negros; os templários/escudeiros antigos podem depois ser reaproveitados como fakes para caçar pedras da roleta.
+  </div>
+</details>
+</section>
 
 <!-- ===== SNIPPET ===== -->
 <section class="card" style="grid-column:1/-1">
@@ -207,7 +343,7 @@ footer .note{font-size:10px;color:#888;margin-top:6px;font-style:italic}
 <!-- ===== RESULTADOS ===== -->
 <section id="results" class="card">
 <h2>📊 Plano Operacional <span class="tip tip-tr" data-tip="Resultado completo com métricas, anti-snipes, fases e BB-Code.">?</span></h2>
-<button onclick="generateOperation()" style="font-size:13px;padding:8px 20px">⚔ GERAR OPERAÇÃO COMPLETA</button>
+<button class="awesome-button" onclick="generateOperation()">⚔ GERAR OPERAÇÃO COMPLETA</button>
 <div id="output" class="empty">Processa as overviews, define fases e alvos. Clica em "Gerar Operação".</div>
 </section>
 
@@ -216,7 +352,7 @@ footer .note{font-size:10px;color:#888;margin-top:6px;font-style:italic}
 <footer>
   <div class="sig">-AbaddoN-</div>
   <div class="tool-name">⚔ KingsAge Planeador de Operações</div>
-  <div class="note">© 2026 -AbaddoN- · Todos os direitos reservados · v1.3</div>
+  <div class="note">© 2026 -AbaddoN- · Todos os direitos reservados · v1.4</div>
 </footer>
 
 </div>
