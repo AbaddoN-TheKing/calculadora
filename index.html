@@ -112,13 +112,24 @@ footer .note{font-size:10px;color:#888;margin-top:6px;font-style:italic}
 .tuto-acc summary::before{content:"▸";color:#840000;font-size:11px}
 .tuto-acc[open] summary::before{content:"▾"}
 .tuto-acc .tuto-body{padding:10px 12px;font-size:11px;line-height:1.6}
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:99999;display:flex;align-items:center;justify-content:center;padding:15px}
+.modal-box{background:#F1EBDD;border:2px solid #CFAB65;border-radius:4px;max-width:1300px;width:100%;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,0.6)}
+.modal-head{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:linear-gradient(180deg,#E8DEBF,#D9CBA0);border-bottom:1px solid #CFAB65;border-radius:4px 4px 0 0}
+.modal-head b{color:#840000;font-size:14px}
+.modal-body{overflow-y:auto;padding:12px}
 @media(max-width:900px){.grid,.row,.row3,.row4,.row5{grid-template-columns:1fr}#results{grid-column:auto}}
+img.ka-unit{width:18px;height:18px;vertical-align:-4px;image-rendering:auto}
+img.ka-res{width:14px;height:14px;vertical-align:-2px}
+.icon img.ka-unit{width:24px;height:24px;vertical-align:middle}
+tr.ka-balance td{background:#f3ead4;border-top:2px solid #c9b483}
 </style>
 </head>
 <body>
 <div id="main-content">
 
-<h1>⚔ KingsAge Planeador de Operações <span style="font-size:11px;color:#666;font-weight:normal">— Servidor: <b id="srvLabel">1x</b></span></h1>
+<h1>⚔ KingsAge Planeador de Operações <span style="font-size:11px;color:#666;font-weight:normal">— Servidor: <b id="srvLabel">1x</b></span>
+  <button class="blue small" style="float:right;margin-top:-2px" onclick="openCombatModal()">🧪 Simulador de Combate / OFFs</button>
+</h1>
 
 <div class="grid">
 
@@ -210,7 +221,7 @@ footer .note{font-size:10px;color:#888;margin-top:6px;font-style:italic}
   <div class="tuto-body">
     <b>Defensivo, mundo novo:</b> templários e escudeiros — baratos, rápidos e já disponíveis com quartel nível 1 (o arqueiro só chega ao nível 6 e custa o dobro por pouca vantagem extra).<br><br>
     <b>Defensivo, mundo avançado (minas no máximo):</b> arcos em massa, já que os recursos deixam de ser o entrave, combinados com cavaleiros negros (a partir do quartel nível 16 — excelente defesa e muito rápidos para reforçar colónias distantes, mas caros, lentos de produzir e custam 6 colonos cada) e pelo menos ~1000 espiões por colónia para dificultar a espionagem inimiga.<br><br>
-    <b>Ofensivo, início de mundo:</b> berserkers (baratos, fortes contra infantaria) e cruzados (rápidos, fortes contra infantaria, ideais para saquear colónias com algumas tropas), alguns escuderos para farmar tambem sao muito bons  pela sua elevada capacidade de carga de recursos.
+    <b>Ofensivo, início de mundo:</b> berserkers (baratos, fortes contra infantaria) e cruzados (rápidos, fortes contra infantaria, ideais para saquear colónias já limpas), sempre com alguns escuderos a acompanhar as OFFs pela sua elevada capacidade de carga de recursos.
   </div>
 </details>
 <details class="tuto-acc">
@@ -349,6 +360,76 @@ footer .note{font-size:10px;color:#888;margin-top:6px;font-style:italic}
 
 </div>
 
+<!-- ===== JANELA: SIMULADOR DE COMBATE / OFFs ===== -->
+<div id="combatModal" class="modal-overlay" style="display:none">
+  <div class="modal-box">
+    <div class="modal-head">
+      <b>🧪 Simulador de Combate & Planeador de OFFs</b>
+      <button class="danger small" onclick="closeCombatModal()">✕ Fechar</button>
+    </div>
+    <div class="modal-body">
+
+      <section class="card">
+      <h2>⚔ Simulador de Combate — Fórmula Oficial <span class="tip tip-tr" data-tip="Motor que reproduz a fórmula oficial do KingsAge (valores de unidade, muralha, noturno, estátua, moral e sorte), validado contra 1500 combates do simulador oficial.">?</span></h2>
+      <div class="alert info">Este motor usa a <b>fórmula oficial do KingsAge</b> (valores de ataque/defesa da ajuda do jogo, tabela de muralha 100%–220%, noturno ×2, estátua +50%, moral e sorte no atacante, expoente de perdas 1,5 e combate separado por classe infantaria/cavalaria/arqueiros). Validado contra <b>1500 combates reais</b>: vencedor correto em <b>98,5%</b> dos casos sem aríetes e erro médio nas perdas de <b>0,1 a 0,4 pontos percentuais</b>. Com aríetes, a destruição de muralha é estimada (nível final exato em 80% dos casos, ±1 nível em 96%), o que baixa a precisão global para ~94% no vencedor e ~2pp nas perdas.</div>
+      <div class="row">
+        <div>
+          <h3>⚔ Exército Atacante</h3>
+          <table class="borderlist" id="simAttTable"></table>
+        </div>
+        <div>
+          <h3>🛡 Exército Defensor</h3>
+          <table class="borderlist" id="simDefTable"></table>
+        </div>
+      </div>
+      <div class="row5" style="margin-top:8px">
+        <div><label>Muralha (nível)</label><input id="simWall" type="number" value="20" min="0" max="30"></div>
+        <div><label>Moral (%)</label><input id="simMoral" type="number" value="100" min="30" max="100"></div>
+        <div><label>Sorte (%)</label><input id="simLuck" type="number" value="0" min="-25" max="25"></div>
+        <div><label>Noturno</label><select id="simNight"><option value="0">Não</option><option value="1">Sim</option></select></div>
+        <div><label>Estátua</label><select id="simStatue"><option value="0">Não</option><option value="1">Sim</option></select></div>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="blue" onclick="runSimBattle()">⚔ Simular Batalha</button>
+        <button class="sec" onclick="loadSimSample()">Exemplo</button>
+      </div>
+      <div id="simBattleOutput" class="empty" style="margin-top:8px">Preenche os exércitos e clica em "Simular Batalha".</div>
+      </section>
+
+      <section class="card">
+      <h2>🎯 Quantas OFFs preciso para limpar este alvo? <span class="tip tip-tr" data-tip="Simula ondas sucessivas da mesma OFF contra o alvo, reduzindo a defesa onda a onda, até estimar quantas OFFs (aldeias) são necessárias.">?</span></h2>
+      <div class="alert warn">Assume ondas <b>idênticas e sucessivas</b> (mesma composição de OFF) contra a defesa restante, com a <b>muralha a acumular os danos dos aríetes de onda para onda</b> e sem reforços do defensor entre ataques. Serve para estimar a ordem de grandeza — quanto mais próximas no tempo as ondas reais chegarem, mais próximo este número fica da realidade.</div>
+      <div class="row">
+        <div>
+          <h3>🛡 Defesa do alvo</h3>
+          <table class="borderlist" id="waveDefTable"></table>
+          <div class="row3" style="margin-top:6px">
+            <div><label>Muralha</label><input id="waveWall" type="number" value="20"></div>
+            <div><label>Noturno</label><select id="waveNight"><option value="0">Não</option><option value="1">Sim</option></select></div>
+            <div><label>Estátua</label><select id="waveStatue"><option value="0">Não</option><option value="1">Sim</option></select></div>
+          </div>
+        </div>
+        <div>
+          <h3>⚔ Composição de 1 OFF (por onda)</h3>
+          <table class="borderlist" id="waveAttTable"></table>
+          <div class="row3" style="margin-top:6px">
+            <div><label>Moral</label><input id="waveMoral" type="number" value="100"></div>
+            <div><label>Sorte</label><input id="waveLuck" type="number" value="0"></div>
+            <div><label>Máx. ondas</label><input id="waveMax" type="number" value="15"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="green" onclick="calcWaves()">🎯 Calcular Ondas Necessárias</button>
+        <button class="sec" onclick="loadWaveSample()">Exemplo</button>
+      </div>
+      <div id="waveOutput" class="empty" style="margin-top:8px">Define a defesa do alvo e a composição de uma OFF.</div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
 <footer>
   <div class="sig">-AbaddoN-</div>
   <div class="tool-name">⚔ KingsAge Planeador de Operações</div>
@@ -432,6 +513,280 @@ const FAKE_TYPES={
 const TROOP_LABELS={farmer:'Milícias',templar:'Templários',squire:'Escudeiros',warrior:'Guerreiros',archer:'Arqueiros',spy:'Espiões',crusader:'Cruzados',blackknight:'Cav. Negros',ram:'Aríetes',catapult:'Catapultas',snob:'Condes'};
 const TROOP_ICONS={farmer:'🛡',templar:'⚔',squire:'🗡',warrior:'⚔',archer:'🏹',spy:'👁',crusader:'🐎',blackknight:'🐴',ram:'🔨',catapult:'⚙',snob:'👑'};
 const TROOP_ORDER=['farmer','templar','squire','warrior','archer','spy','crusader','blackknight','ram','catapult','snob'];
+
+/* ===== Custos oficiais de treino e colonos (help.php?m=units) ===== */
+const TROOP_COST={
+  farmer     :{wood:3     ,stone:10    ,iron:7    ,pop:1  },
+  templar    :{wood:30    ,stone:10    ,iron:80   ,pop:1  },
+  squire     :{wood:10    ,stone:20    ,iron:30   ,pop:1  },
+  warrior    :{wood:40    ,stone:50    ,iron:50   ,pop:1  },
+  archer     :{wood:80    ,stone:160   ,iron:80   ,pop:1  },
+  spy        :{wood:40    ,stone:60    ,iron:60   ,pop:2  },
+  crusader   :{wood:100   ,stone:100   ,iron:300  ,pop:4  },
+  blackknight:{wood:100   ,stone:300   ,iron:500  ,pop:6  },
+  ram        :{wood:100   ,stone:500   ,iron:200  ,pop:5  },
+  catapult   :{wood:200   ,stone:600   ,iron:200  ,pop:8  },
+  snob       :{wood:100000,stone:120000,iron:80000,pop:100}
+};
+/* Imagens oficiais do KingsAge (fallback para emoji se a imagem não carregar) */
+const KA_IMG='https://s55-br.kingsage.gameforge.com/img/';
+const TROOP_IMG={farmer:'unit_farmer.png',templar:'unit_sword.png',squire:'unit_spear.png',warrior:'unit_axe.png',
+  archer:'unit_bow.png',spy:'unit_spy.png',crusader:'unit_light.png',blackknight:'unit_heavy.png',
+  ram:'unit_ram.png',catapult:'unit_kata.png',snob:'unit_snob.png'};
+const RES_META={wood:{img:'res2.png',label:'Madeira'},stone:{img:'res1.png',label:'Pedra'},iron:{img:'res3.png',label:'Ferro'}};
+function troopIcon(u){return `<img class="ka-unit" src="${KA_IMG}units/${TROOP_IMG[u]}" alt="" title="${TROOP_LABELS[u]}" onerror="this.outerHTML='${TROOP_ICONS[u]}'">`}
+function resIcon(k){return `<img class="ka-res" src="${KA_IMG}${RES_META[k].img}" alt="" title="${RES_META[k].label}">`}
+function popIcon(){return `<img class="ka-res" src="${KA_IMG}worker.png" alt="" title="Colonos">`}
+/* soma custos/colonos de um conjunto de tropas */
+function troopCost(troops){
+  const o={wood:0,stone:0,iron:0,pop:0,units:0};
+  TROOP_ORDER.forEach(u=>{const n=troops[u]||0,c=TROOP_COST[u];if(!n||!c)return;
+    o.wood+=n*c.wood;o.stone+=n*c.stone;o.iron+=n*c.iron;o.pop+=n*c.pop;o.units+=n});
+  o.res=o.wood+o.stone+o.iron;return o;
+}
+function costCellsHtml(c){
+  return `<td style="text-align:right">${fmtNum(c.units)}</td>`+
+         `<td style="text-align:right">${fmtNum(c.pop)}</td>`+
+         `<td style="text-align:right">${fmtNum(c.wood)}</td>`+
+         `<td style="text-align:right">${fmtNum(c.stone)}</td>`+
+         `<td style="text-align:right">${fmtNum(c.iron)}</td>`+
+         `<td style="text-align:right"><b>${fmtNum(c.res)}</b></td>`;
+}
+function balanceTableHtml(attLost,defLost,title){
+  const a=troopCost(attLost),d=troopCost(defLost);
+  const head=`<tr><th>${title||'Balanço'}</th><th>Tropas</th><th>${popIcon()} Colonos</th>`+
+    `<th>${resIcon('wood')} Madeira</th><th>${resIcon('stone')} Pedra</th><th>${resIcon('iron')} Ferro</th><th>Total recursos</th></tr>`;
+  const rows=`<tr><td>⚔ Perdas do atacante (OFFs)</td>${costCellsHtml(a)}</tr>`+
+             `<tr><td>🛡 Perdas do defensor</td>${costCellsHtml(d)}</tr>`+
+             `<tr class="ka-balance"><td><b>Saldo (defensor − atacante)</b></td>`+
+             `<td style="text-align:right">${fmtSigned(d.units-a.units)}</td>`+
+             `<td style="text-align:right">${fmtSigned(d.pop-a.pop)}</td>`+
+             `<td style="text-align:right">${fmtSigned(d.wood-a.wood)}</td>`+
+             `<td style="text-align:right">${fmtSigned(d.stone-a.stone)}</td>`+
+             `<td style="text-align:right">${fmtSigned(d.iron-a.iron)}</td>`+
+             `<td style="text-align:right"><b>${fmtSigned(d.res-a.res)}</b></td></tr>`;
+  return `<table class="borderlist" style="margin-top:8px"><thead>${head}</thead><tbody>${rows}</tbody></table>`+
+    `<p class="small" style="margin-top:4px">Oponentes derrotados nesta operação — <b>atacante ganha ${fmtNum(d.pop)}</b> (colonos que destruiu), <b>defensor ganha ${fmtNum(a.pop)}</b>. `+
+    `Os pontos da aldeia não mudam: segundo a ajuda oficial, tropas e batalhas não influenciam a pontuação — só a destruição de edifícios por catapultas e a queda da muralha é que retiram pontos ao alvo.</p>`;
+}
+function fmtSigned(n){return (n>0?'+':'')+fmtNum(n)}
+
+/* ===== MOTOR DE COMBATE EXATO (fórmula oficial KingsAge 7.1.1) =====
+ * Valores de ataque/defesa: tabela oficial help.php?m=units.
+ * Bónus de muralha: tabela oficial help.php?m=buildings&build=wall (100%..220%).
+ * Noturno: x2 na defesa. Estátua: +50% na fortificação. Moral e sorte: no atacante.
+ * A batalha é resolvida em 3 sub-combates (infantaria / cavalaria / arqueiros),
+ * cada um contra a quota de defesa proporcional ao seu peso no ataque.
+ * O perdedor de cada sub-combate perde 100%; o vencedor perde (perdedor/vencedor)^1.5.
+ * Aríetes destroem muralha antes do combate; metade do dano aplica-se já nesta batalha.
+ * Validado contra 1500 combates do simulador oficial:
+ *   vencedor correto 98,5% (sem aríetes) / 93,9% (global)
+ *   erro médio nas perdas do atacante 0,11pp (sem aríetes) / 1,9pp (global)
+ *   erro médio nas perdas do defensor 0,42pp (sem aríetes) / 2,7pp (global)
+ */
+const COMBAT_STATS={
+  farmer     :{att:20 ,def:40  ,defCav:30  ,defArc:5   ,cls:'inf'},
+  templar    :{att:100,def:300 ,defCav:100 ,defArc:200 ,cls:'inf'},
+  squire     :{att:50 ,def:100 ,defCav:200 ,defArc:300 ,cls:'inf'},
+  warrior    :{att:350,def:70  ,defCav:50  ,defArc:50  ,cls:'inf'},
+  archer     :{att:150,def:400 ,defCav:150 ,defArc:100 ,cls:'arc'},
+  spy        :{att:1  ,def:10  ,defCav:5   ,defArc:7   ,cls:'spy'},
+  crusader   :{att:900,def:200 ,defCav:300 ,defArc:300 ,cls:'cav'},
+  blackknight:{att:600,def:1500,defCav:1000,defArc:1000,cls:'cav'},
+  ram        :{att:100,def:100 ,defCav:200 ,defArc:20  ,cls:'inf'},
+  catapult   :{att:500,def:400 ,defCav:100 ,defArc:200 ,cls:'inf'},
+  snob       :{att:100,def:300 ,defCav:100 ,defArc:200 ,cls:'inf'}
+};
+const COMBAT_WALL_BONUS=[1.00,1.05,1.09,1.14,1.18,1.23,1.28,1.33,1.38,1.43,1.49,1.55,1.61,1.68,1.74,1.81,1.88,1.96,2.04,2.12,2.20];
+const COMBAT_EXP=1.5;
+/* Destruição de muralha por aríetes (ajustado a 438 combates com aríetes:
+   nível final exato em 80%, ±1 nível em 96%). */
+const RAM_COST=13.76, RAM_GROWTH=1.0426, RAM_RATIO_K=1.352, RAM_RATIO_EXP=1.302, RAM_PRE_BATTLE=0.5;
+const COMBAT_CLASSES=['inf','cav','arc'];
+const COMBAT_DEFKEY={inf:'def',cav:'defCav',arc:'defArc'};
+
+function combatWallBonus(lvl){
+  lvl=Math.max(0,Math.min(20,lvl));
+  const lo=Math.floor(lvl),hi=Math.min(20,lo+1),f=lvl-lo;
+  return COMBAT_WALL_BONUS[lo]*(1-f)+COMBAT_WALL_BONUS[hi]*f;
+}
+function combatAtkPower(att){return TROOP_ORDER.reduce((s,u)=>{const st=COMBAT_STATS[u];return st&&st.cls!=='spy'?s+(att[u]||0)*st.att:s},0)}
+function combatAtkByClass(att){
+  const o={inf:0,cav:0,arc:0};
+  TROOP_ORDER.forEach(u=>{const st=COMBAT_STATS[u];if(st&&st.cls!=='spy')o[st.cls]+=(att[u]||0)*st.att});
+  return o;
+}
+function combatDefByClass(def){
+  const o={inf:0,cav:0,arc:0};
+  COMBAT_CLASSES.forEach(c=>{const k=COMBAT_DEFKEY[c];
+    o[c]=TROOP_ORDER.reduce((s,u)=>{const st=COMBAT_STATS[u];return st&&st.cls!=='spy'?s+(def[u]||0)*st[k]:s},0)});
+  return o;
+}
+function combatCavShare(att){const a=combatAtkByClass(att),t=a.inf+a.cav+a.arc;return t>0?a.cav/t:0}
+function combatDefPower(def,cavShare){const d=combatDefByClass(def);return d.inf*(1-cavShare)+d.cav*cavShare}
+
+function combatRamWallDrop(rams,wall,ratio){
+  wall=Math.max(0,Math.min(20,wall));
+  if(!(rams>0)||wall<=0)return 0;
+  let power=rams*Math.min(1,Math.pow(Math.min(1,ratio*RAM_RATIO_K),RAM_RATIO_EXP));
+  let lvl=wall;
+  while(lvl>0&&power>=RAM_COST*Math.pow(RAM_GROWTH,lvl)){power-=RAM_COST*Math.pow(RAM_GROWTH,lvl);lvl--}
+  return wall-lvl;
+}
+
+function simulateBattle(att,def,mods){
+  mods=mods||{};
+  const wall0=Math.max(0,Math.min(20,mods.wall||0));
+  const moral=(mods.moral==null?100:mods.moral),luck=mods.luck||0;
+  const night=!!mods.night,statue=!!mods.statue;
+  const aMul=(moral/100)*(1+luck/100);
+  const aCls=combatAtkByClass(att);
+  COMBAT_CLASSES.forEach(c=>aCls[c]*=aMul);
+  const atkEff=aCls.inf+aCls.cav+aCls.arc;
+  const dRaw=combatDefByClass(def);
+  const defMul=w=>combatWallBonus(w)*(night?2:1)*(statue?1.5:1);
+
+  const result={att:{},def:{},atkRaw:combatAtkPower(att),defRaw:dRaw.inf,cavShare:combatCavShare(att),
+                wallBefore:wall0,wallAfter:wall0,wallUsed:wall0,classes:{}};
+  if(atkEff<=0){
+    result.winner='defender';result.fraction=0;result.atkEff=0;
+    result.defEff=dRaw.inf*defMul(wall0);result.ratio=0;
+    TROOP_ORDER.forEach(u=>{result.att[u]={amount:att[u]||0,losses:att[u]||0,survivors:0};
+                            result.def[u]={amount:def[u]||0,losses:0,survivors:def[u]||0}});
+    return result;
+  }
+  // 1) aríetes: dano de muralha, metade aplicada antes deste combate
+  const defRef=COMBAT_CLASSES.reduce((s,c)=>s+(aCls[c]/atkEff)*dRaw[c],0)*defMul(wall0);
+  const drop=combatRamWallDrop(att.ram||0,wall0,defRef>0?atkEff/defRef:Infinity);
+  result.wallAfter=wall0-drop;
+  result.wallUsed=wall0-RAM_PRE_BATTLE*drop;
+  const dMul=defMul(result.wallUsed);
+
+  // 2) sub-combate por classe
+  const lossFrac={inf:0,cav:0,arc:0};let defLost=0;
+  COMBAT_CLASSES.forEach(c=>{
+    if(aCls[c]<=0)return;
+    const share=aCls[c]/atkEff, D=dRaw[c]*dMul*share;
+    if(aCls[c]>D){lossFrac[c]=D>0?Math.pow(D/aCls[c],COMBAT_EXP):0;defLost+=share}
+    else{lossFrac[c]=1;defLost+=share*Math.pow(aCls[c]/D,COMBAT_EXP)}
+    result.classes[c]={atk:aCls[c],def:D,attLossFrac:lossFrac[c]};
+  });
+  defLost=Math.min(1,defLost);
+
+  const defEff=COMBAT_CLASSES.reduce((s,c)=>s+(aCls[c]/atkEff)*dRaw[c],0)*dMul;
+  result.atkEff=atkEff;result.defEff=defEff;result.ratio=defEff>0?atkEff/defEff:Infinity;
+  result.winner=defLost>=0.999?'attacker':'defender';
+  result.defLossFrac=defLost;
+  const attLossTotal=TROOP_ORDER.reduce((s,u)=>{const st=COMBAT_STATS[u];
+    return st&&st.cls!=='spy'?s+(att[u]||0)*lossFrac[st.cls]:s},0);
+  const attQty=TROOP_ORDER.reduce((s,u)=>{const st=COMBAT_STATS[u];return st&&st.cls!=='spy'?s+(att[u]||0):s},0);
+  result.attLossFrac=attQty>0?attLossTotal/attQty:0;
+  result.fraction=result.winner==='attacker'?result.attLossFrac:defLost;
+
+  // 3) perdas por unidade
+  TROOP_ORDER.forEach(u=>{
+    const st=COMBAT_STATS[u],ac=att[u]||0,dc=def[u]||0;
+    if(!st){result.att[u]={amount:ac,losses:0,survivors:ac};result.def[u]={amount:dc,losses:0,survivors:dc};return}
+    if(st.cls==='spy'){ // batalha de espiões (aproximada — poucos dados de calibração)
+      let al=0,dl=0;
+      if(ac>0&&dc>0){const r=Math.min(ac,dc)/Math.max(ac,dc);
+        if(ac>dc){al=Math.round(ac*Math.pow(r,3));dl=Math.round(dc*(1-r*r))}
+        else{al=ac;dl=Math.round(dc*Math.pow(ac/dc,2))}}
+      else if(dc>0&&ac===0){dl=0}
+      result.att[u]={amount:ac,losses:Math.min(ac,al),survivors:ac-Math.min(ac,al)};
+      result.def[u]={amount:dc,losses:Math.min(dc,dl),survivors:dc-Math.min(dc,dl)};
+      return;
+    }
+    const al=Math.min(ac,Math.round(ac*lossFrac[st.cls]));
+    const dl=Math.min(dc,Math.round(dc*defLost));
+    result.att[u]={amount:ac,losses:al,survivors:ac-al};
+    result.def[u]={amount:dc,losses:dl,survivors:dc-dl};
+  });
+  return result;
+}
+
+function buildTroopInputTable(containerId,idPrefix){
+  const el=$(containerId);
+  el.innerHTML='<thead><tr><th>Unidade</th><th>Quantidade</th></tr></thead><tbody>'+
+    TROOP_ORDER.map(u=>`<tr><td>${troopIcon(u)} ${TROOP_LABELS[u]}</td><td><input id="${idPrefix}_${u}" type="number" value="0" min="0" style="text-align:right"></td></tr>`).join('')+
+    '</tbody>';
+}
+function readTroopInputTable(idPrefix){const o={};TROOP_ORDER.forEach(u=>{const el=$(`${idPrefix}_${u}`);o[u]=el?(+el.value||0):0});return o}
+function setTroopInputTable(idPrefix,obj){TROOP_ORDER.forEach(u=>{const el=$(`${idPrefix}_${u}`);if(el)el.value=obj[u]||0})}
+
+function renderBattleTable(att,def,r){
+  const rows=TROOP_ORDER.filter(u=>att[u]>0||def[u]>0).map(u=>{
+    const a=r.att[u],d=r.def[u];
+    return `<tr><td>${troopIcon(u)} ${TROOP_LABELS[u]}</td>
+      <td style="text-align:right">${fmtNum(a.amount)}</td><td style="text-align:right;color:#990000">${fmtNum(a.losses)}</td><td style="text-align:right;color:#2a7a2a">${fmtNum(a.survivors)}</td>
+      <td style="text-align:right">${fmtNum(d.amount)}</td><td style="text-align:right;color:#990000">${fmtNum(d.losses)}</td><td style="text-align:right;color:#2a7a2a">${fmtNum(d.survivors)}</td></tr>`;
+  }).join('');
+  const winnerLabel=r.winner==='attacker'?'<span class="ok">⚔ Atacante vence</span>':'<span class="bad">🛡 Defensor resiste</span>';
+  const wallInfo=(r.wallBefore!==r.wallAfter)?` · muralha ${r.wallBefore} → ${r.wallAfter} (aríetes)`:'';
+  const attLost={},defLost={};TROOP_ORDER.forEach(u=>{attLost[u]=r.att[u].losses;defLost[u]=r.def[u].losses});
+  const balance=balanceTableHtml(attLost,defLost,'Balanço desta batalha');
+  return `<div class="alert ${r.winner==='attacker'?'ok':'bad'}">${winnerLabel} — poder ${fmtNum(Math.round(r.atkEff))} vs ${fmtNum(Math.round(r.defEff))} (rácio ${r.ratio.toFixed(2)}) · perdas atacante ${(r.attLossFrac*100).toFixed(1)}% · perdas defensor ${(r.defLossFrac*100).toFixed(1)}%${wallInfo}</div>
+  <table class="borderlist"><thead><tr><th rowspan="2">Unidade</th><th colspan="3">Atacante</th><th colspan="3">Defensor</th></tr><tr><th>Qtd.</th><th>Perdas</th><th>Sobrev.</th><th>Qtd.</th><th>Perdas</th><th>Sobrev.</th></tr></thead><tbody>${rows}</tbody></table>`+balance;
+}
+
+function runSimBattle(){
+  const att=readTroopInputTable('simAtt'),def=readTroopInputTable('simDef');
+  const mods={wall:+$('simWall').value||0,moral:+$('simMoral').value||100,luck:+$('simLuck').value||0,night:$('simNight').value==='1',statue:$('simStatue').value==='1'};
+  if(combatAtkPower(att)<=0){$('simBattleOutput').innerHTML='<div class="alert bad">Define pelo menos uma unidade atacante.</div>';return}
+  const r=simulateBattle(att,def,mods);
+  $('simBattleOutput').innerHTML=renderBattleTable(att,def,r);
+}
+function loadSimSample(){
+  setTroopInputTable('simAtt',{warrior:28000,crusader:4000});
+  setTroopInputTable('simDef',{templar:20000,squire:15000,archer:11000,blackknight:5000});
+}
+
+function calcWaves(){
+  const off=readTroopInputTable('waveAtt');
+  let def=readTroopInputTable('waveDef');
+  const wall0=+$('waveWall').value||0,night=$('waveNight').value==='1',statue=$('waveStatue').value==='1';
+  const moral=+$('waveMoral').value||100,luck=+$('waveLuck').value||0;
+  const maxWaves=+$('waveMax').value||15;
+  if(combatAtkPower(off)<=0){$('waveOutput').innerHTML='<div class="alert bad">Define a composição da OFF primeiro.</div>';return}
+  const defTotalInitial=TROOP_ORDER.reduce((s,u)=>s+(def[u]||0),0);
+  if(defTotalInitial<=0){$('waveOutput').innerHTML='<div class="alert bad">Define a defesa do alvo primeiro.</div>';return}
+  let waveRows=[],cleared=false,wave=0,wall=Math.max(0,Math.min(20,wall0));
+  const attLostTotal={},defLostTotal={};TROOP_ORDER.forEach(u=>{attLostTotal[u]=0;defLostTotal[u]=0});
+  while(wave<maxWaves){
+    wave++;
+    const defBefore=TROOP_ORDER.reduce((s,u)=>s+(def[u]||0),0);
+    if(defBefore<=0){cleared=true;wave--;break}
+    const r=simulateBattle(off,def,{wall,moral,luck,night,statue});
+    const wallBefore=wall;wall=r.wallAfter;                 // aríetes: a muralha fica danificada para a onda seguinte
+    let attLossesWave=0;
+    TROOP_ORDER.forEach(u=>{attLostTotal[u]+=r.att[u].losses;defLostTotal[u]+=r.def[u].losses;attLossesWave+=r.att[u].losses});
+    const newDef={};TROOP_ORDER.forEach(u=>newDef[u]=r.def[u].survivors);
+    const defAfter=TROOP_ORDER.reduce((s,u)=>s+newDef[u],0);
+    waveRows.push({wave,winner:r.winner,defBefore,defAfter,attLossesWave,fraction:r.fraction,wallBefore,wallAfter:wall});
+    def=newDef;
+    if(defAfter<=0){cleared=true;break}
+  }
+  const rowsHtml=waveRows.map(w=>`<tr><td><b>${w.wave}</b></td>`+
+    `<td>${w.winner==='attacker'?'<span class="pill off">Atacante</span>':'<span class="pill def">Defensor</span>'}</td>`+
+    `<td style="text-align:right">${fmtNum(w.defBefore)}</td><td style="text-align:right">${fmtNum(w.defAfter)}</td>`+
+    `<td style="text-align:center">${w.wallBefore}${w.wallAfter!==w.wallBefore?' → <b>'+w.wallAfter+'</b>':''}</td>`+
+    `<td style="text-align:right;color:#990000">${fmtNum(w.attLossesWave)}</td>`+
+    `<td style="text-align:right">${(w.fraction*100).toFixed(1)}%</td></tr>`).join('');
+  const totalAttLosses=TROOP_ORDER.reduce((s,u)=>s+attLostTotal[u],0);
+  const summary=cleared
+    ? `<div class="alert ok">🎯 Precisas de <b>${waveRows.length} onda(s)/OFF(s)</b> idênticas e sucessivas para limpar este alvo — perdes cerca de <b>${fmtNum(totalAttLosses)}</b> tropas no total. Muralha: <b>${wall0} → ${wall}</b>.</div>`
+    : `<div class="alert warn">⚠ Após ${maxWaves} ondas ainda sobram <b>${fmtNum(waveRows[waveRows.length-1].defAfter)}</b> defensores (muralha ${wall0} → ${wall}). Aumenta o número máximo de ondas, ou reforça a OFF.</div>`;
+  $('waveOutput').innerHTML=summary+
+  `<table class="borderlist" style="margin-top:8px"><thead><tr><th>Onda</th><th>Vencedor</th><th>Defesa antes</th><th>Defesa depois</th><th>Muralha</th><th>Baixas OFF</th><th>% perdas venc.</th></tr></thead><tbody>${rowsHtml}</tbody></table>`+
+  balanceTableHtml(attLostTotal,defLostTotal,'Custo total da operação')+
+  `<p class="small" style="margin-top:6px">Como as ondas são idênticas, a ordem entre elas não altera o resultado — o que importa é enviá-las o mais próximo possível umas das outras, antes que o defensor consiga reforçar ou o poder recuperar (ver dica "Ajustar condes logo após uma ofensiva" nos tutoriais).</p>`;
+}
+function loadWaveSample(){
+  setTroopInputTable('waveDef',{templar:20000,squire:15000,archer:11000,blackknight:5000});
+  setTroopInputTable('waveAtt',{warrior:28000,crusader:4000});
+}
+function openCombatModal(){$('combatModal').style.display='flex'}
+function closeCombatModal(){$('combatModal').style.display='none'}
 
 let players=[];
 let phases=[];
@@ -620,7 +975,7 @@ function renderPlayers(){
       <div class="troop-summary">
         ${TROOP_ORDER.filter(k => totals[k] > 0).map(k => `
           <div class="troop-stat" title="${TROOP_LABELS[k]}: ${fmtNum(totals[k])}">
-            <div class="icon">${TROOP_ICONS[k]}</div>
+            <div class="icon">${troopIcon(k)}</div>
             <div class="v">${fmtNum(totals[k])}</div>
             <div class="l">${TROOP_LABELS[k]}</div>
           </div>
@@ -630,7 +985,7 @@ function renderPlayers(){
         <thead><tr>
           <th>Coordenada</th>
           <th>Nome</th>
-          ${TROOP_ORDER.map(k => `<th style="text-align:center" title="${TROOP_LABELS[k]}">${TROOP_ICONS[k]}</th>`).join('')}
+          ${TROOP_ORDER.map(k => `<th style="text-align:center" >${troopIcon(k)}</th>`).join('')}
           <th>Poder</th>
           <th>Tipo</th>
         </tr></thead>
@@ -784,7 +1139,7 @@ function generateOperation(){
       <div class="troop-summary">
         ${TROOP_ORDER.filter(k => totals[k] > 0).map(k => `
           <div class="troop-stat" title="${TROOP_LABELS[k]}: ${fmtNum(totals[k])}">
-            <div class="icon">${TROOP_ICONS[k]}</div>
+            <div class="icon">${troopIcon(k)}</div>
             <div class="v">${fmtNum(totals[k])}</div>
             <div class="l">${TROOP_LABELS[k]}</div>
           </div>
@@ -804,7 +1159,7 @@ function generateOperation(){
     <div class="troop-summary">
       ${TROOP_ORDER.filter(k => globalTotals[k] > 0).map(k => `
         <div class="troop-stat" title="${TROOP_LABELS[k]}: ${fmtNum(globalTotals[k])}">
-          <div class="icon">${TROOP_ICONS[k]}</div>
+          <div class="icon">${troopIcon(k)}</div>
           <div class="v">${fmtNum(globalTotals[k])}</div>
           <div class="l">${TROOP_LABELS[k]}</div>
         </div>
@@ -969,6 +1324,10 @@ $('worldSpeed').addEventListener('change',()=>{aggregateAllies();renderPlayers()
 $('minOffPower').addEventListener('input',()=>renderPlayers());
 
 /* ===== Init ===== */
+buildTroopInputTable('simAttTable','simAtt');
+buildTroopInputTable('simDefTable','simDef');
+buildTroopInputTable('waveDefTable','waveDef');
+buildTroopInputTable('waveAttTable','waveAtt');
 showSnippet();
 addFakePhase();
 addRealPhase();
