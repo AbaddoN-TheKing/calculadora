@@ -487,3 +487,10 @@ input.ph-name { flex: 1; min-width: 0; width: auto; }
 .phase-card .row2 { grid-template-columns: 1.35fr 1fr; }
 input[type="time"] { font-size: 15px; padding-left: 10px; padding-right: 8px; }
 @media (max-width: 440px) { .brand { font-size: 0.92rem; letter-spacing: 0.03em; } .brand svg { width: 22px; height: 22px; } }
+
+/* ---- Tropas / Mapa / Classificação ---- */
+.troop-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.chip { display: inline-flex; align-items: center; gap: 4px; padding: 2px 9px; border-radius: 999px; border: 1.5px solid var(--line); font-size: 0.82rem; font-weight: 700; background: var(--surface2); }
+.chip .ka-unit { width: 16px; height: 16px; }
+tr.row-link { cursor: pointer; }
+tr.row-link:active { background: rgba(127, 127, 127, 0.12); }

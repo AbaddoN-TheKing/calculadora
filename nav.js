@@ -1,7 +1,7 @@
 // Navegação por separadores (hash). O separador "Mais" agrupa as restantes secções.
 (() => {
     'use strict';
-    const MORE = ['mais', 'condes', 'tutoriais', 'extrair', 'backup'];
+    const MORE = ['mais', 'condes', 'tutoriais', 'extrair', 'backup', 'tropas', 'mapa', 'ranking'];
     const views = [...document.querySelectorAll('[data-view]')];
     const links = [...document.querySelectorAll('#appNav a')];
     const names = views.map((v) => v.dataset.view);

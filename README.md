@@ -9,9 +9,5 @@ Planeador de operações para alianças do KingsAge (PWA, sem servidor, funciona
 - **Operação** – configuração, fases, alvos e aldeias inimigas (tudo guardado no dispositivo).
 - **Plano** – cronologia (filtrável por jogador), anti-snipe, tratado de paz, tropas usadas, BB-Code e formato simples.
 - **Combate** – simulador de batalha (fórmula oficial) e "quantas OFFs preciso?", com carregamento de tropas das aldeias importadas.
-- **Mais** – condes por pontuação, tutoriais, script de extração, backup/partilha.
-
-## Publicar
-Substitui o conteúdo do repositório `calculadora` por esta pasta (GitHub Pages). JS puro, sem build.
-
+- **Mais** – tabela de tropas (OFF/DEFF/MIXT), mapa global e classificação de jogadores, condes por pontuação, tutoriais, script de extração, backup/partilha.
 **v2.0** · feito por -AbaddoN-

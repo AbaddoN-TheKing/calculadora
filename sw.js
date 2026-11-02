@@ -1,4 +1,4 @@
-const CACHE_VERSION = 1;
+const CACHE_VERSION = 3;
 const CACHE_NAME = `kaops-v${CACHE_VERSION}`;
 const ASSETS = [
     './',
@@ -14,11 +14,13 @@ const ASSETS = [
     './plan.js',
     './combat.js',
     './more.js',
+    './troops.js',
     './share.js',
     './install.js',
     './nav.js',
     './manifest.json',
     './icon.svg',
+    './icon-maskable-512.png',
     './icon-192.png',
     './icon-512.png',
     './apple-touch-icon.png'
